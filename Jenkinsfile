@@ -8,8 +8,8 @@ pipeline {
  stages {
   stage('Build client') {
    steps {
-    sh 'CI=true yarn --no-progress --non-interactive --skip-integrity-check --frozen-lockfile install'
-    sh 'npm_config_python=/usr/local/bin/python2.7 yarn build'
+    sh 'CI=true npm_config_python=/usr/local/bin/python2.7 yarn --no-progress --non-interactive --skip-integrity-check --frozen-lockfile install'
+    sh 'yarn build'
    }
   }
 
