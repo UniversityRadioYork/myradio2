@@ -1,0 +1,72 @@
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/scss/variables";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+
+.bp3-dark #root { 
+  background-color: $pt-dark-app-background-color;
+}
+
+#root {
+  height: 100%;
+}
+
+.myr-container {
+  height: 100%;
+}
+
+.myr-wrapper {
+  display: flex;
+  max-width: 100%;
+  margin: 0;
+  margin-right: 8px;
+  height: 100%;
+}
+
+.myr-main {
+  flex-grow: 1;
+  margin-top: 8px;
+  height: 100%;
+}
+
+.myr-navbar {
+  padding: 8px inherit;
+  z-index: 1000;
+}
+
+.myr-sidebar {
+  z-index: 2000;
+}
+
+.myradio-logo {
+  display: block;
+  max-height: 2em;
+  margin: 0.3em auto;
+}
+
+.bp3-menu-header.bigger-margin {
+  margin: 10px 5px;
+}
+
+@media screen and (min-width: 900px) {
+  .myr-main {
+    margin-left: 300px;
+  }
+
+  .myr-navbar {
+    display: block;
+    // position: absolute;
+    left: 268px;
+    max-width: calc(100% - 268px);
+  }
+
+  .myr-sidebar {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 268px;
+    overflow-y: scroll;
+    max-height: 100vh;
+  }
+}
