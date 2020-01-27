@@ -43,7 +43,7 @@ async function makeMyradioRequest(
   console.log(conf);
   let query: any = {};
   if (typeof conf.apiKey === "string") {
-    query.apikey = conf.apiKey;
+    query["api_key"] = conf.apiKey;
   }
 
   let resp: Response;
