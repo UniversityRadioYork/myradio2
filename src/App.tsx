@@ -18,14 +18,14 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <BrowserRouter basename={basepath}>
-        <div className="myr-container">
-          <Sidebar />
-          <div className="myr-wrapper">
-            <LoginGate>
+        <LoginGate>
+          <div className="myr-container">
+            <Sidebar />
+            <div className="myr-wrapper">
               <MyRadio2Pages />
-            </LoginGate>
+            </div>
           </div>
-        </div>
+        </LoginGate>
       </BrowserRouter>
     </Provider>
   );
