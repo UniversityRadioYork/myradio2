@@ -1,14 +1,6 @@
 import initialRules from "../../features.json";
 import { createSlice } from "@reduxjs/toolkit";
-
-export type FLIPSFeatureConfig = 
-	| {
-		rule: "env";
-		localhost: boolean;
-		dev: boolean;
-		staging: boolean;
-		prod: boolean;
-	}
+import { FLIPSFeatureConfig } from "./index.js";
 
 const flipsSlice = createSlice({
 	name: "FLIPS",
