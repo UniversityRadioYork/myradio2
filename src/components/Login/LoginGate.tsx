@@ -5,6 +5,7 @@ import * as state from "./state";
 
 const LoginGate: React.FC = ({ children }) => {
   const isSignedIn = useSelector((state: AppState) => state.Login.signedIn);
+  const myrConfig = useSelector((state: AppState) => state.GlobalConfig.myradio);
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
@@ -41,7 +42,7 @@ const LoginGate: React.FC = ({ children }) => {
       return (
         <div className="myr-login-backdrop">
           <iframe
-            src="https://ury.org.uk/myradio-dev/MyRadio/login/?next=%2fmyradio-dev%2fMyRadio%2fmyr2Handoff%3fnonav%3dtrue&nonav=true"
+            src={`${myrConfig.webBase}/MyRadio/login/?next=${encodeURIComponent(`${myrConfig.webBase}/MyRadio/myr2Handoff?nonav=true`)}&nonav=true`}
             className="myr-login-frame"
           />
         </div>

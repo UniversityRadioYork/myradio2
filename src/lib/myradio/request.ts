@@ -1,20 +1,14 @@
 import qs from "qs";
+import store from "../../store";
 
 export interface MyRadioApiConfig {
-  baseUrl: string;
+  apiBase: string;
   apiKey?: string;
 }
 
 type HttpMethod = "GET" | "POST" | "PUT";
 
 export class MyRadioApiError extends Error {}
-
-let GLOBAL_CONFIG: null | MyRadioApiConfig = null;
-
-export function setGlobalConfig(cfg: MyRadioApiConfig) {
-  console.log("loaded global config", cfg);
-  GLOBAL_CONFIG = cfg;
-}
 
 export type MyRadioApiRequestor<TArgs, TRes> = (
   cfgOrArgsOrOid?: MyRadioApiConfig | TArgs | number,
@@ -30,13 +24,7 @@ async function makeMyradioRequest(
 ): Promise<any> {
   let conf: MyRadioApiConfig;
   if (config === null) {
-    if (GLOBAL_CONFIG === null) {
-      throw new Error(
-        "Tried to call API with no config - either explicit or global"
-      );
-    }
-    console.log("global cfg", GLOBAL_CONFIG);
-    conf = GLOBAL_CONFIG;
+    conf = store.getState().GlobalConfig.myradio;
   } else {
     conf = config;
   }
@@ -49,12 +37,12 @@ async function makeMyradioRequest(
   let resp: Response;
   if (method === "GET") {
     query = { ...query, ...args };
-    resp = await fetch(conf.baseUrl + path + "?" + qs.stringify(query), {
+    resp = await fetch(conf.apiBase + path + "?" + qs.stringify(query), {
       method: "GET",
       credentials: "include"
     });
   } else {
-    resp = await fetch(conf.baseUrl + path + "?" + qs.stringify(query), {
+    resp = await fetch(conf.apiBase + path + "?" + qs.stringify(query), {
       method,
       headers: {
         "Content-Type": "application/json"

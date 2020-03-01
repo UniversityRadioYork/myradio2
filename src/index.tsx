@@ -3,11 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import * as myradio from "./lib/myradio/request";
-
-myradio.setGlobalConfig({
-    baseUrl: "https://ury.org.uk/api-dev/v2"
-});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
