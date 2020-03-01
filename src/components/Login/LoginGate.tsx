@@ -12,7 +12,6 @@ const LoginGate: React.FC = ({ children }) => {
 
   useLayoutEffect(() => {
     const messageHandler = (e: MessageEvent) => {
-      console.log("got sign-in iFrame event", e);
       if (e.data === "myradio:signedIn") {
         dispatch(state.checkSignIn());
       }

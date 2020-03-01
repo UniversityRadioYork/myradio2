@@ -5,11 +5,9 @@ export function evaluateFeature(feat: FLIPSFeatureConfig): boolean {
 	const state = store.getState();
 	switch (feat.rule) {
 		case "env":
-			let environment: "localhost" | "dev" | "staging" | "prod";
-			if (window.location.hostname === "localhost") {
+			let environment: "dev" | "staging" | "prod" | "localhost" = state.GlobalConfig.myradio.environment;
+			if (environment === "dev" && window.location.hostname === "localhost") {
 				environment = "localhost";
-			} else {
-				environment = state.GlobalConfig.myradio.environment;
 			}
 			return feat[environment] === true;
 		default: throw new Error(`Unrecognised FLIPS rule ${feat.rule}`);

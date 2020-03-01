@@ -6,6 +6,7 @@ import { Menu, Card, FormGroup, InputGroup } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../rootReducer";
 import * as devOptionsState from "../DevOptions/state";
+import Flips from "../FLIPS";
 
 const NavItem: React.FC<{ text: string; path: string }> = ({ text, path }) => {
   const history = useHistory();
@@ -37,7 +38,9 @@ const Sidebar: React.FC = () => {
 
           <Menu.Divider className="bigger-margin" title="Show Scheduler" />
           <NavItem path="/Scheduler/myShows" text="My Shows" />
-          <NavItem path="/scheduler/newShow" text="Apply for new Show" />
+          <Flips feature="newScheduler" fallback={<NavItem path="/Scheduler/editShow" text="Apply for new Show" />}>
+            <NavItem path="/scheduler/newShow" text="Apply for new Show" />
+          </Flips>
           <NavItem path="/Scheduler/shows" text="This Term's Shows" />
           <NavItem path="/Scheduler/shows?all=true" text="All Shows" />
           <NavItem path="/Scheduler" text="Pending Allocations" />
