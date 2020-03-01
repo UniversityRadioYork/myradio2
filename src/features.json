@@ -1,0 +1,9 @@
+{
+	"newScheduler": {
+		"rule": "env",
+		"localhost": true,
+		"dev": true,
+		"staging": true,
+		"prod": false
+	}
+}

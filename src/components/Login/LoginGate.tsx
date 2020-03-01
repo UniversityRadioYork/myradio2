@@ -2,10 +2,12 @@ import React, { useLayoutEffect, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../rootReducer";
 import * as state from "./state";
+import MyRadioEnvironments from "../../lib/myradio/environments";
 
 const LoginGate: React.FC = ({ children }) => {
   const isSignedIn = useSelector((state: AppState) => state.Login.signedIn);
   const myrConfig = useSelector((state: AppState) => state.GlobalConfig.myradio);
+  const env = MyRadioEnvironments[myrConfig.environment];
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
@@ -42,7 +44,7 @@ const LoginGate: React.FC = ({ children }) => {
       return (
         <div className="myr-login-backdrop">
           <iframe
-            src={`${myrConfig.webBase}/MyRadio/login/?next=${encodeURIComponent(`${myrConfig.webBase}/MyRadio/myr2Handoff?nonav=true`)}&nonav=true`}
+            src={`${env.webBase}/MyRadio/login/?next=${encodeURIComponent(`${env.webBase}/MyRadio/myr2Handoff?nonav=true`)}&nonav=true`}
             className="myr-login-frame"
           />
         </div>

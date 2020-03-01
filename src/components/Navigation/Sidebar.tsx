@@ -3,8 +3,9 @@ import { useHistory } from "react-router-dom";
 
 import MyRadioLogo from "../../assets/myradio-logo.svg";
 import { Menu, Card, FormGroup, InputGroup } from "@blueprintjs/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../rootReducer";
+import * as devOptionsState from "../DevOptions/state";
 
 const NavItem: React.FC<{ text: string; path: string }> = ({ text, path }) => {
   const history = useHistory();
@@ -13,6 +14,8 @@ const NavItem: React.FC<{ text: string; path: string }> = ({ text, path }) => {
 
 const Sidebar: React.FC = () => {
   const user = useSelector((state: AppState) => state.Login.currentUser);
+  const globalConfig = useSelector((state: AppState) => state.GlobalConfig);
+  const dispatch = useDispatch();
 
   return (
     <div className={"myr-sidebar bp3-elevation-2"}>
@@ -27,6 +30,10 @@ const Sidebar: React.FC = () => {
           {!!user && (
             <Menu.Item text={`Signed in as ${user.fname} ${user.sname}`} />
           )}
+          <Menu.Item
+            onClick={() => dispatch(devOptionsState.open())}
+            text={`(on environment: ${globalConfig.myradio.environment})`}
+          />
 
           <Menu.Divider className="bigger-margin" title="Show Scheduler" />
           <NavItem path="/Scheduler/myShows" text="My Shows" />

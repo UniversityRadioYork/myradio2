@@ -3,8 +3,7 @@ import { set } from "lodash";
 
 export interface GlobalConfig {
 	myradio: {
-		webBase: string;
-		apiBase: string;
+		environment: "dev" | "staging" | "prod";
 		apiKey?: string;
 	}
 }
@@ -13,8 +12,7 @@ const globalConfig = createSlice({
 	name: "GlobalConfig",
 	initialState: {
 		myradio: {
-			webBase: "https://ury.org.uk/myradio-dev",
-			apiBase: "https://ury.org.uk/api-dev/v2"
+			environment: "dev"
 		}
 	} as GlobalConfig,
 	reducers: {

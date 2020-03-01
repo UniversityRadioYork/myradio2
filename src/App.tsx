@@ -8,6 +8,7 @@ import store from "./store";
 import { Provider } from "react-redux";
 import LoginGate from "./components/Login/LoginGate";
 import Sidebar from "./components/Navigation/Sidebar";
+import DevOptions from "./components/DevOptions";
 
 const basepath =
   window.location.origin === "https://ury.org.uk"
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             </div>
           </div>
         </LoginGate>
+        <DevOptions />
       </BrowserRouter>
     </Provider>
   );

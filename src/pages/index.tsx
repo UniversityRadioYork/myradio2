@@ -4,6 +4,7 @@ import { QuotesPage } from "./Quotes";
 import { HomeScreen } from "./HomeScreen";
 import { MyRadioBodge } from "./MyRadioBodge";
 import { ApplyForShow } from "./Scheduler/ApplyForShow";
+import Flips from "../components/FLIPS";
 
 export const MyRadio2Pages: React.FC = () => (
   <>
@@ -11,7 +12,9 @@ export const MyRadio2Pages: React.FC = () => (
       <Switch>
         <Route path="/quotes" component={QuotesPage} />
 
-        <Route path="/scheduler/newShow" component={ApplyForShow} />
+        <Flips feature="newScheduler">
+          <Route path="/scheduler/newShow" component={ApplyForShow} />
+        </Flips>
 
         <Route exact path="/" component={HomeScreen} />
         <Route component={MyRadioBodge} />

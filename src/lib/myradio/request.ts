@@ -1,5 +1,6 @@
 import qs from "qs";
 import store from "../../store";
+import MyRadioEnvironments from "./environments";
 
 export interface MyRadioApiConfig {
   apiBase: string;
@@ -24,7 +25,7 @@ async function makeMyradioRequest(
 ): Promise<any> {
   let conf: MyRadioApiConfig;
   if (config === null) {
-    conf = store.getState().GlobalConfig.myradio;
+    conf = MyRadioEnvironments[store.getState().GlobalConfig.myradio.environment];
   } else {
     conf = config;
   }
