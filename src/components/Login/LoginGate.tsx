@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useCallback, useEffect } from "react";
+import React, { useLayoutEffect, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../rootReducer";
 import * as state from "./state";
@@ -40,13 +40,10 @@ const LoginGate: React.FC = ({ children }) => {
     case false:
       return (
         <div className="myr-login-backdrop">
-          <div className="myr-login-main">
-            <h1>Welcome to MyRadio.</h1>
-            <iframe
-              src="https://ury.org.uk/myradio-dev/MyRadio/login/?next=%2fmyradio-dev%2fMyRadio%2fmyr2Handoff%3fnonav%3dtrue&nonav=true"
-              className="myr-login-frame"
-            />
-          </div>
+          <iframe
+            src="https://ury.org.uk/myradio-dev/MyRadio/login/?next=%2fmyradio-dev%2fMyRadio%2fmyr2Handoff%3fnonav%3dtrue&nonav=true"
+            className="myr-login-frame"
+          />
         </div>
       );
     default:
