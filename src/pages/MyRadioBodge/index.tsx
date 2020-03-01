@@ -9,7 +9,7 @@ export const MyRadioBodge: React.FC<RouteComponentProps> = ({ location }) => {
       <iframe
         ref={iframeRef}
         src={
-          "https://ury.org.uk/myradio/" +
+          "https://ury.org.uk/myradio-dev/" +
           location.pathname +
           (location.search.length > 0
             ? location.search + "&nonav=true"
