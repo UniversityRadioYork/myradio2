@@ -1,7 +1,7 @@
 import { MyRadioApiConfig, MyRadioApiError } from "./request";
 import { useState, useEffect } from "react";
 
-export const useMyradioApi = <TArgs extends {}, TRes extends {}>(
+export const useMyradioApi = <TArgs, TRes extends {}>(
     // TODO: no type safety on args
   requestor: (...args: any) => Promise<TRes>
 ) => {

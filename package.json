@@ -4,21 +4,31 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.23.1",
+    "@blueprintjs/icons": "^3.13.0",
+    "@blueprintjs/select": "^3.11.2",
+    "@reduxjs/toolkit": "^1.2.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/draft-js": "^0.10.38",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/qs": "^6.9.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.3",
+    "draft-js": "^0.11.4",
+    "draft-js-export-html": "^1.4.1",
     "node-sass": "^4.13.1",
     "qs": "^6.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-hook-form": "^4.8.0",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "redux": "^4.0.5",
     "typescript": "~3.7.2"
   },
   "homepage": "https://ury.org.uk/myradio2-alpha",
@@ -42,5 +52,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^6.12.0",
+    "prettier": "^1.19.1"
   }
 }

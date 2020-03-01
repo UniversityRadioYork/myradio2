@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import * as myradio from "./lib/myradio/request";
 
 myradio.setGlobalConfig({
-    baseUrl: "https://ury.org.uk/api/v2"
+    baseUrl: "https://ury.org.uk/api-dev/v2"
 });
 
 ReactDOM.render(<App />, document.getElementById('root'));

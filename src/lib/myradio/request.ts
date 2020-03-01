@@ -71,10 +71,10 @@ async function makeMyradioRequest(
 }
 
 /*
-  There are three calling conventions in use in the MyRadio API:
+  There are many calling conventions in use in the MyRadio API:
   - /class/action
   - /class/{thingid}/action
-  - /class/action/{thingid}
+  - /class/action/{argument}
 */
 
 /**
@@ -127,6 +127,27 @@ export function makeSimpleRequestor<TArgs extends {}, TRes extends {}>(
       method,
       path,
       args
+    );
+  };
+}
+
+/**
+ * Creates a requestor for an API endpoint that takes an argument in the path.
+ *
+ * In the path, the spot to insert the arg MUST be indicated using {1}.
+ * @param method
+ * @param path
+ */
+export function makeArgRequestor<TArg1 extends string, TRes extends {}>(
+  method: HttpMethod,
+  path: string
+) {
+  return async (arg: TArg1, config?: MyRadioApiConfig): Promise<TRes> => {
+    return await makeMyradioRequest(
+      typeof config === "undefined" ? null : config,
+      method,
+      path.replace(/\{1\}/, arg),
+      {}
     );
   };
 }
