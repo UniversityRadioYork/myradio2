@@ -16,7 +16,7 @@ export async function makeCeedoxRequest(
         // language=XML
         body: `<?xml version="1.0" encoding="UTF-8"?>
         <methodCall>
-            <methodCallName>${methodName}</methodCallName>
+            <methodName>${methodName}</methodName>
             <params>
             ${paramsXml}
             </params>
