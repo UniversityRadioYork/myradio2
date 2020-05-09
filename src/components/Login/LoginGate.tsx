@@ -43,6 +43,7 @@ const LoginGate: React.FC = ({ children }) => {
       return (
         <div className="myr-login-backdrop">
           <iframe
+            data-testid="loginForm"
             src={`${env.webBase}/MyRadio/login/?next=${encodeURIComponent(`${env.webBase}/MyRadio/myr2Handoff?nonav=true`)}&nonav=true`}
             className="myr-login-frame"
           />

@@ -27,6 +27,8 @@ const login = createSlice({
 
 export default login.reducer;
 
+export const actions = login.actions;
+
 export const checkSignIn = (): AppThunk => async dispatch => {
     try {
         const result = await user.currentUser();

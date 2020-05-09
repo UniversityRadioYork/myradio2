@@ -1,8 +1,13 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import {configureStore, ThunkAction, Action, getDefaultMiddleware} from "@reduxjs/toolkit";
 import rootReducer, { AppState } from "./rootReducer";
+import {_syncEnvironmentMiddleware} from "./lib/myradio/request";
 
 const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    middleware: [
+        _syncEnvironmentMiddleware,
+        ...getDefaultMiddleware()
+    ]
 });
 
 export default store;

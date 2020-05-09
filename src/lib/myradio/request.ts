@@ -1,10 +1,20 @@
 import qs from "qs";
-import store from "../../store";
 import MyRadioEnvironments from "./environments";
+import {Middleware} from "redux";
 
 export interface MyRadioApiConfig {
   apiBase: string;
   apiKey?: string;
+}
+
+let myradioEnvironment: "dev" | "staging" | "prod" = "dev";
+
+export const _syncEnvironmentMiddleware: Middleware = store => next => action => {
+  const result = next(action);
+  const state = store.getState();
+  if (state.GlobalConfig.myradio.environment !== myradioEnvironment) {
+    myradioEnvironment = state.GlobalConfig.myradio.environment;
+  }
 }
 
 type HttpMethod = "GET" | "POST" | "PUT";
@@ -25,11 +35,10 @@ async function makeMyradioRequest(
 ): Promise<any> {
   let conf: MyRadioApiConfig;
   if (config === null) {
-    conf = MyRadioEnvironments[store.getState().GlobalConfig.myradio.environment];
+    conf = MyRadioEnvironments[myradioEnvironment];
   } else {
     conf = config;
   }
-  console.log(conf);
   let query: any = {};
   if (typeof conf.apiKey === "string") {
     query["api_key"] = conf.apiKey;

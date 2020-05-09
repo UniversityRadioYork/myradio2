@@ -3,7 +3,6 @@ import React from "react";
 import { evaluateFeature } from "../../lib/FLIPS";
 import { useSelector } from "react-redux";
 import { AppState } from "../../rootReducer";
-import { RouteProps } from "react-router-dom";
 
 interface FLIPSProps {
 	feature: string;
