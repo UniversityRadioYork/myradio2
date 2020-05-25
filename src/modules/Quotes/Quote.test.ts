@@ -31,7 +31,7 @@ describe("Quote", () => {
             (request.makeMyradioRequest as jest.MockedFunction<any>).mockResolvedValue([testQuote1]);
             const result = await Quote.getAll();
             expect(result).toHaveLength(1);
-            expect(result[0]).toEqual(testQuote1);
+            expect(result[0]).toMatchObject(testQuote1);
         });
     });
 });
