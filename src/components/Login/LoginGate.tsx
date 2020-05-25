@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useCallback, useEffect } from "react";
+import React, { useLayoutEffect, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../rootReducer";
 import * as state from "./state";
@@ -22,7 +22,7 @@ const LoginGate: React.FC = ({ children }) => {
 
   useEffect(() => {
     dispatch(state.checkSignIn());
-  }, []);
+  }, [dispatch]);
 
   switch (isSignedIn) {
     case true:
@@ -43,6 +43,7 @@ const LoginGate: React.FC = ({ children }) => {
       return (
         <div className="myr-login-backdrop">
           <iframe
+            title="Sign in form"
             data-testid="loginForm"
             src={`${env.webBase}/MyRadio/login/?next=${encodeURIComponent(`${env.webBase}/MyRadio/myr2Handoff?nonav=true`)}&nonav=true`}
             className="myr-login-frame"

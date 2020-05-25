@@ -7,6 +7,7 @@ export const MyRadioBodge: React.FC<RouteComponentProps> = ({ location }) => {
   return (
     <div style={{ display: "flex", height: "100%" }}>
       <iframe
+        title="MyRadio page embed"
         ref={iframeRef}
         src={
           "https://ury.org.uk/myradio-dev/" +

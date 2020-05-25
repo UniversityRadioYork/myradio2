@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 export function useFetch
 <TArgs extends any[], TRes>
@@ -28,5 +28,7 @@ export function useFetch
         get();
     }, [fetcher, args]);
 
-    return [data, loading, error, (...argsIn: TArgs) => setArgs(argsIn)];
+    const triggerFetcher = useCallback((...argsIn: TArgs) => setArgs(argsIn), []);
+
+    return [data, loading, error, triggerFetcher];
 }

@@ -1,8 +1,7 @@
 import React from "react";
 import "./App.scss";
-import { BrowserRouter, useHistory } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { MyRadio2Pages } from "./pages";
-import { Menu, FormGroup, InputGroup, Card } from "@blueprintjs/core";
 
 import store from "./store";
 import { Provider } from "react-redux";

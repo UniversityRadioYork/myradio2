@@ -6,7 +6,7 @@ import {Quote} from "./Quote";
 export const QuotesPage: React.FC = () => {
     const [quotes, loading, error, getQuotes] = useFetch(useCallback(() => Quote.getAll(), []));
 
-    useEffect(() => {getQuotes()}, []);
+    useEffect(() => {getQuotes()}, [getQuotes]);
 
     if (loading) {
         return <Spinner />;
