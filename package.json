@@ -19,8 +19,10 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.3",
+    "@types/yup": "^0.28.3",
     "draft-js": "^0.11.4",
     "draft-js-export-html": "^1.4.1",
+    "formik": "^2.1.4",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "qs": "^6.9.1",
@@ -31,7 +33,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "redux": "^4.0.5",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "yup": "^0.28.5"
   },
   "homepage": "https://ury.org.uk/myradio2-alpha",
   "scripts": {
@@ -58,6 +61,7 @@
   "devDependencies": {
     "@testing-library/dom": "^6.12.0",
     "@testing-library/react-hooks": "^3.2.1",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "react-test-renderer": "^16.13.1"
   }
 }

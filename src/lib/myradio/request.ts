@@ -15,6 +15,7 @@ export const _syncEnvironmentMiddleware: Middleware = store => next => action =>
   if (state.GlobalConfig.myradio.environment !== myradioEnvironment) {
     myradioEnvironment = state.GlobalConfig.myradio.environment;
   }
+  return result;
 }
 
 type HttpMethod = "GET" | "POST" | "PUT";
@@ -27,14 +28,14 @@ export type MyRadioApiRequestor<TArgs, TRes> = (
   cfg?: MyRadioApiConfig
 ) => Promise<TRes>;
 
-async function makeMyradioRequest(
-  config: MyRadioApiConfig | null,
+export async function makeMyradioRequest(
+  config: MyRadioApiConfig | null | undefined,
   method: HttpMethod,
   path: string,
   args: any
 ): Promise<any> {
   let conf: MyRadioApiConfig;
-  if (config === null) {
+  if (typeof config === "undefined" || config === null) {
     conf = MyRadioEnvironments[myradioEnvironment];
   } else {
     conf = config;
@@ -141,6 +142,7 @@ export function makeArgRequestor<TArg1 extends string, TRes extends {}>(
   path: string
 ) {
   return async (arg: TArg1, config?: MyRadioApiConfig): Promise<TRes> => {
+    // noinspection RegExpRedundantEscape
     return await makeMyradioRequest(
       typeof config === "undefined" ? null : config,
       method,
