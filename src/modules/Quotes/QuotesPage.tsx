@@ -2,11 +2,27 @@ import React, {useCallback, useEffect} from "react";
 import { Card, Spinner, Button, Intent } from "@blueprintjs/core";
 import {useFetch} from "../../lib/helpers/useFetch";
 import {Quote} from "./Quote";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+import { GetAllQuotes } from "./__generated__/GetAllQuotes";
+
+const GET_QUOTES = gql`
+query GetAllQuotes {
+    allQuotes {
+        id
+        date
+        text
+        source {
+            id
+            fname
+            sname
+        }
+    }
+}
+`;
 
 export const QuotesPage: React.FC = () => {
-    const [quotes, loading, error, getQuotes] = useFetch(useCallback(() => Quote.getAll(), []));
-
-    useEffect(() => {getQuotes()}, [getQuotes]);
+    const { loading, error, data: quotes } = useQuery<GetAllQuotes>(GET_QUOTES);
 
     if (loading) {
         return <Spinner />;
@@ -29,7 +45,7 @@ export const QuotesPage: React.FC = () => {
                 <Button disabled intent={Intent.PRIMARY}>Add Quote</Button>
             </div>
             <div style={{ marginTop: 4 }}>
-                {quotes.map(q => (
+                {quotes!.allQuotes?.map(q => (
                     <Card key={q.id}>
                         <div>
                             {q.source !== null && <b>{q.source.fname} {q.source.sname}</b>} <small>{q.date}</small>

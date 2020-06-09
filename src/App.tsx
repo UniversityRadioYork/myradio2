@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import LoginGate from "./components/Login/LoginGate";
 import Sidebar from "./components/Navigation/Sidebar";
 import DevOptions from "./components/DevOptions";
+import MyradioApolloProvider from "./lib/myradio/apollo";
 
 const basepath =
   window.location.origin === "https://ury.org.uk"
@@ -17,17 +18,19 @@ const basepath =
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <BrowserRouter basename={basepath}>
-        <LoginGate>
-          <div className="myr-container">
-            <Sidebar />
-            <div className="myr-wrapper">
-              <MyRadio2Pages />
+      <MyradioApolloProvider>
+        <BrowserRouter basename={basepath}>
+          <LoginGate>
+            <div className="myr-container">
+              <Sidebar />
+              <div className="myr-wrapper">
+                <MyRadio2Pages />
+              </div>
             </div>
-          </div>
-        </LoginGate>
-        <DevOptions />
-      </BrowserRouter>
+          </LoginGate>
+          <DevOptions />
+        </BrowserRouter>
+      </MyradioApolloProvider>
     </Provider>
   );
 };
