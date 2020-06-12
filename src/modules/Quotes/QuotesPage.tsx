@@ -1,8 +1,6 @@
 import React, {useCallback, useEffect} from "react";
 import { Card, Spinner, Button, Intent } from "@blueprintjs/core";
-import {useFetch} from "../../lib/helpers/useFetch";
-import {Quote} from "./Quote";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { GetAllQuotes } from "./__generated__/GetAllQuotes";
 

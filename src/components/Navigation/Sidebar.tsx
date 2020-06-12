@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
           </FormGroup>
 
           {!!user && (
-            <Menu.Item text={`Signed in as ${user.fname} ${user.sname}`} />
+            <NavItem path="/me" text={`Signed in as ${user.fname} ${user.sname}`} />
           )}
           <Menu.Item
             onClick={() => dispatch(devOptionsState.open())}

@@ -9,20 +9,20 @@ import { useSelector } from "react-redux";
 import { AppState } from "../../rootReducer";
 import MyRadioEnvironments from "./environments";
 
-function createApolloClient(url: string) {
+function createApolloClient(env: "dev" | "staging" | "prod", url: string) {
   return new ApolloClient({
     link: ApolloLink.from([
       onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
           graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
+            console.warn(
               `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
             )
           );
         if (networkError) console.log(`[Network error]: ${networkError}`);
       }),
       new HttpLink({
-          uri: url,
+          uri: url + (env !== "prod" ? "?debug=true" : ""),
           credentials: "include"
       })
     ]),
@@ -39,7 +39,7 @@ const MyradioApolloProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setClient(
-      createApolloClient(envConfig.graphqlBase)
+      createApolloClient(env, envConfig.graphqlBase)
     );
   }, [envConfig]);
 
