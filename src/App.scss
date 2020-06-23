@@ -34,10 +34,6 @@
   z-index: 1000;
 }
 
-.myr-sidebar {
-  z-index: 2000;
-}
-
 .myradio-logo {
   display: block;
   max-height: 2em;
@@ -66,7 +62,8 @@
     left: 0;
     top: 0;
     width: 268px;
-    overflow-y: scroll;
+    height: 100vh;
+    //overflow-y: scroll;
     max-height: 100vh;
   }
 }

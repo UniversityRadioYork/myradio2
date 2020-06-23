@@ -1,87 +1,221 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import classNames from "classnames";
+import {
+  Menu,
+  Card,
+  FormGroup,
+  InputGroup,
+  Classes,
+  Icon,
+} from "@blueprintjs/core";
+import { motion, AnimatePresence } from "framer-motion";
 
 import MyRadioLogo from "../../assets/myradio-logo.svg";
-import { Menu, Card, FormGroup, InputGroup } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../rootReducer";
 import * as devOptionsState from "../DevOptions/state";
-import Flips from "../FLIPS";
 
-const NavItem: React.FC<{ text: string; path: string }> = ({ text, path }) => {
+import "./Sidebar.scss";
+import { IconNames } from "@blueprintjs/icons";
+
+const NavItem: React.FC<{
+  text: string;
+  path?: string;
+  onClick?: () => any;
+  level: number;
+  newTab?: boolean;
+  childItems?: NavTreeNode[];
+  expanded?: boolean;
+}> = ({ text, path, onClick, level, newTab, childItems, expanded }) => {
   const history = useHistory();
-  return <Menu.Item onClick={() => history.push(path)} text={text} />;
+  function handleClick(e: React.MouseEvent<any>) {
+    if (onClick) {
+      onClick();
+    }
+    if (typeof path === "string") {
+      e.preventDefault();
+      if (newTab) {
+        window.open(path, "_blank");
+      } else {
+        history.push(path);
+      }
+    }
+  }
+  return (
+    <motion.li className={classNames("item", `level-${level}`)}>
+      <button className="nav-btn" onClick={handleClick}>
+        {level === 1 && (childItems?.length || 0) > 0 && (
+          <motion.span
+            animate={{ rotate: expanded ? 180 : 0 }}
+            style={{
+              display: "inline-block",
+              transformOrigin: "-0.5em center",
+            }}
+          >
+            <Icon icon={IconNames.CHEVRON_DOWN} className="chevron" />
+          </motion.span>
+        )}
+        {text}
+      </button>
+      <AnimatePresence>
+        {childItems && expanded && (
+          <motion.ul
+            className="nav"
+            initial={{ y: -0, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 0, opacity: 0 }}
+          >
+            {childItems.map((child, idx) => (
+              <NavItem
+                key={idx}
+                path={child.location}
+                text={child.label}
+                newTab={child.newTab}
+                level={level + 1}
+                onClick={onClick}
+              />
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </motion.li>
+  );
 };
+
+interface NavTreeNode {
+  label: string;
+  location: string;
+  newTab?: boolean;
+  children?: NavTreeNode[];
+}
+
+const NavTree: NavTreeNode[] = [
+  {
+    label: "Home",
+    location: "/",
+  },
+  {
+    label: "Radio and Podcasting",
+    location: "/Scheduler/myShows",
+    children: [
+      {
+        label: "My Shows",
+        location: "/Scheduler/myShows",
+      },
+      {
+        label: "Audio Logger",
+        location: "https://ury.org.uk/loggerng",
+        newTab: true,
+      },
+      {
+        label: "My Podcasts",
+        location: "/Podcast",
+      },
+    ],
+  },
+  {
+    label: "Calendar [NYI]",
+    location: "/calendar",
+    children: [
+      {
+        label: "Events",
+        location: "/calendar/events",
+      },
+      {
+        label: "Studio Booking",
+        location: "/calendar/studioBooking",
+      },
+    ],
+  },
+  {
+    label: "Training Hub [NYI]",
+    location: "/training",
+    children: [
+      {
+        label: "Training Sessions",
+        location: "/training/sessions",
+      },
+      {
+        label: "Guides, Handbooks, and Handover",
+        location: "/training/docs",
+      },
+    ],
+  },
+  {
+    label: "Administration",
+    location: "/",
+    children: [
+      {
+        label: "Members",
+        location: "/Profile/list",
+      },
+      {
+        label: "Show Scheduler",
+        location: "/Scheduler",
+      },
+      {
+        label: "Music Library",
+        location: "/Library",
+      },
+      {
+        label: "Mailing Lists",
+        location: "/Mail",
+      },
+    ],
+  },
+];
 
 const Sidebar: React.FC = () => {
   const user = useSelector((state: AppState) => state.Login.currentUser);
   const globalConfig = useSelector((state: AppState) => state.GlobalConfig);
   const dispatch = useDispatch();
 
+  const [selectedTopLevelIdx, setSelectedTopLevelIdx] = useState(-1);
+
   return (
-    <div className={"myr-sidebar bp3-elevation-2"}>
-      <Card elevation={1}>
-        <img className="myradio-logo" src={MyRadioLogo} alt="" />
+    <div className={classNames("myr-sidebar", Classes.ELEVATION_2)}>
+      <img className="myradio-logo" src={MyRadioLogo} alt="" />
 
-        <Menu>
-          <FormGroup>
-            <InputGroup leftIcon="search" placeholder="Search..." />
-          </FormGroup>
+      <div>
+        <FormGroup>
+          <InputGroup leftIcon="search" placeholder="Search..." />
+        </FormGroup>
 
+        <ul className="nav">
           {!!user && (
-            <NavItem path="/me" text={`Signed in as ${user.fname} ${user.sname}`} />
+            <NavItem
+              level={0}
+              path="/me"
+              text={`Signed in as ${user.fname} ${user.sname}`}
+              onClick={() => setSelectedTopLevelIdx(-1)}
+            />
           )}
-          <Menu.Item
+          <NavItem
             onClick={() => dispatch(devOptionsState.open())}
+            level={0}
             text={`(on environment: ${globalConfig.myradio.environment})`}
           />
 
-          <Menu.Divider className="bigger-margin" title="Show Scheduler" />
-          <NavItem path="/Scheduler/myShows" text="My Shows" />
-          <Flips feature="newScheduler" fallback={<NavItem path="/Scheduler/editShow" text="Apply for new Show" />}>
-            <NavItem path="/scheduler/newShow" text="Apply for new Show" />
-          </Flips>
-          <NavItem path="/Scheduler/shows" text="This Term's Shows" />
-          <NavItem path="/Scheduler/shows?all=true" text="All Shows" />
-          <NavItem path="/Scheduler" text="Pending Allocations" />
-          <Menu.Divider className="bigger-margin" title="Podcast Manager" />
-          <NavItem path="/Podcast/editPodcast" text="Upload a New Podcast" />
-          <NavItem path="/Podcast" text="My Podcasts" />
-          <NavItem path="/Podcast/allPodcast" text="All Podcasts" />
-          <Menu.Divider
-            className="bigger-margin"
-            title="Music Library Manager"
-          />
-          <NavItem path="/Library/search" text="Search Tracks" />
-          <NavItem path="/Library/addTrack" text="Upload a New Track" />
-          <NavItem path="/iTones/listPlaylists" text="Edit Playlists" />
-          <NavItem
-            path="/iTones/requestTrack"
-            text="Request Track for Jukebox"
-          />
-          <Menu.Divider className="bigger-margin" title="Training" />
-          <NavItem
-            path="/Scheduler/createDemo"
-            text="Create Training Session"
-          />
-          <NavItem path="/Scheduler/listDemos" text="All Training Sessions" />
-          <Menu.Divider className="bigger-margin" title="Member Database" />
-          <NavItem path="/Profile" text="My Profile" />
-          <NavItem path="/Profile/list" text="All Members" />
-          <NavItem path="/Profile/quickAdd" text="Register New Member" />
-          <Menu.Divider className="bigger-margin" title="Email" />
-          <NavItem path="/Mail" text="Manage Mailing Lists" />
-          <Menu.Item
-            onClick={() =>
-              window.open("https://ury.org.uk/roundcube", "_blank")
-            }
-            text="RoundCube"
-          />
-          <Menu.Divider className="bigger-margin" title="Miscellaneous" />
-          <NavItem path="/Webcam" text="Webcams" />
-          <NavItem path="/quotes" text="Quotes Board" />
-        </Menu>
-      </Card>
+          {NavTree.map((node, idx) => (
+            <>
+              <NavItem
+                key={idx}
+                level={1}
+                path={node.location}
+                text={node.label}
+                newTab={node.newTab}
+                childItems={node.children}
+                expanded={
+                  selectedTopLevelIdx === -1 || selectedTopLevelIdx === idx
+                }
+                onClick={() => setSelectedTopLevelIdx(idx === 0 ? -1 : idx)}
+              />
+              {idx !== NavTree.length - 1 && <Menu.Divider />}
+            </>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

@@ -41,7 +41,7 @@ export interface UserInfo_allTraining {
 }
 
 export interface UserInfo_officerships {
-  __typename: "Officership";
+  __typename: "MemberOfficership";
   from_date: any;
   till_date: any | null;
   officer_name: string;
@@ -57,6 +57,7 @@ export interface UserInfo_timeline {
 export interface UserInfo {
   __typename: "User";
   id: string;
+  itemId: number;
   publicEmail: string | null;
   college: string | null;
   eduroam: string | null;

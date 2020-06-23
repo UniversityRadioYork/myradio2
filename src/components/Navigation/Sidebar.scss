@@ -1,0 +1,43 @@
+.myr-sidebar {
+  z-index: 2000;
+
+  .nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0.4em;
+    margin-left: 1.5em;
+  }
+
+  .item {
+    font-size: 14px;
+    padding: 0.2em;
+    margin: 0.8em 0;
+
+    &.level-1 {
+      height: auto;
+      margin-bottom: 1.2em;
+    }
+
+    &.level-2 {
+      margin-left: 0.5em;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      font-size: 14px;
+      text-align: left;
+      width: calc(100% - 1.5em);
+
+      .chevron {
+        margin-left: -1em;
+        margin-right: 0.5em;
+      }
+    }
+
+    &.level-1 > .nav-btn {
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+}

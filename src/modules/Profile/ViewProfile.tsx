@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import gql from "graphql-tag";
 import { UserInfo } from "./__generated__/UserInfo";
-import { Card } from "@blueprintjs/core";
+import { Card, Dialog, Button, Intent, Classes } from "@blueprintjs/core";
 import UserTimeline, { USER_TIMELINE_FRAGMENT } from "./UserTimeline";
+
+import AllEmailsView from "./AllEmailsView";
 
 export const USER_INFO_FRAGMENT = gql`
   fragment UserInfo on User {
     id
+    itemId
     publicEmail
     college
     eduroam
@@ -49,6 +52,8 @@ export const USER_INFO_FRAGMENT = gql`
 `;
 
 const ViewProfile: React.FC<{ user: UserInfo }> = ({ user }) => {
+  const [allEmailsOpen, setAllEmailsOpen] = useState(false);
+
   const currentOfficerships = user.officerships?.filter(
     (x) => x.till_date === null
   );
@@ -76,6 +81,16 @@ const ViewProfile: React.FC<{ user: UserInfo }> = ({ user }) => {
       {user.publicEmail !== null && (
         <p>
           <b>Email:</b> {user.publicEmail}
+        </p>
+      )}
+      {user.email !== null && (
+        <p>
+          <Button
+            intent={Intent.PRIMARY}
+            onClick={() => setAllEmailsOpen(true)}
+          >
+            What emails go to this user?
+          </Button>
         </p>
       )}
       {user.phone !== null && (
@@ -111,6 +126,16 @@ const ViewProfile: React.FC<{ user: UserInfo }> = ({ user }) => {
           <UserTimeline timeline={user.timeline} />
         </>
       )}
+
+      <Dialog
+        isOpen={allEmailsOpen}
+        onClose={() => setAllEmailsOpen(false)}
+        lazy
+      >
+        <div className={Classes.DIALOG_BODY}>
+          <AllEmailsView userId={user.itemId} />
+        </div>
+      </Dialog>
     </div>
   );
 };

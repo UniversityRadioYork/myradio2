@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/classnames": "^2.2.10",
     "@types/draft-js": "^0.10.38",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.149",
@@ -27,9 +28,11 @@
     "apollo-link": "^1.2.14",
     "apollo-link-error": "^1.1.13",
     "apollo-link-http": "^1.5.17",
+    "classnames": "^2.2.6",
     "draft-js": "^0.11.4",
     "draft-js-export-html": "^1.4.1",
     "formik": "^2.1.4",
+    "framer-motion": "^1.11.1",
     "graphql": "^15.1.0",
     "graphql-tag": "^2.10.3",
     "lodash": "^4.17.15",
@@ -52,7 +55,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "apollo:schema": "apollo client:download-schema -c apollo.config.js src/schema.graphql",
-    "apollo:codegen": "apollo client:codegen -c apollo.config.js --target typescript __generated__"
+    "apollo:codegen": "apollo client:codegen -c apollo.config.js --target typescript __generated__ && node scripts/loadTypes.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -72,7 +75,9 @@
   "devDependencies": {
     "@testing-library/dom": "^6.12.0",
     "@testing-library/react-hooks": "^3.2.1",
+    "@types/node-fetch": "^2.5.7",
     "@ury1350/prettier-config": "^1.0.1",
+    "node-fetch": "^2.6.0",
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.13.1"
   },
