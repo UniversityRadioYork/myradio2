@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build client') {
             steps {
-                sh 'yarn build'
+                sh 'REACT_APP_GIT_SHA=`git rev-parse --short HEAD` yarn build'
             }
         }
 
