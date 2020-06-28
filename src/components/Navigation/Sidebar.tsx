@@ -8,6 +8,7 @@ import {
   InputGroup,
   Classes,
   Icon,
+  Spinner,
 } from "@blueprintjs/core";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -97,11 +98,11 @@ const NavTree: NavTreeNode[] = [
   },
   {
     label: "Radio and Podcasting",
-    location: "/Scheduler/myShows",
+    location: "/scheduler/shows",
     children: [
       {
         label: "My Shows",
-        location: "/Scheduler/myShows",
+        location: "/scheduler/shows",
       },
       {
         label: "Audio Logger",
@@ -144,7 +145,7 @@ const NavTree: NavTreeNode[] = [
   },
   {
     label: "Administration",
-    location: "/",
+    location: "/admin",
     children: [
       {
         label: "Members",
@@ -170,12 +171,25 @@ const Sidebar: React.FC = () => {
   const user = useSelector((state: AppState) => state.Login.currentUser);
   const globalConfig = useSelector((state: AppState) => state.GlobalConfig);
   const dispatch = useDispatch();
+  const showGlobalSpinner = useSelector<AppState>(
+    (state) => state.Nav.globalSpinnerVisible
+  );
 
-  const [selectedTopLevelIdx, setSelectedTopLevelIdx] = useState(-1);
+  const location = useHistory().location;
+  const activePath = location.pathname;
 
   return (
     <div className={classNames("myr-sidebar", Classes.ELEVATION_2)}>
-      <img className="myradio-logo" src={MyRadioLogo} alt="" />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <img className="myradio-logo" src={MyRadioLogo} alt="" />
+        <Spinner
+          size={Spinner.SIZE_SMALL}
+          className={classNames(
+            "global-spinner",
+            !showGlobalSpinner && "hidden"
+          )}
+        />
+      </div>
 
       <div>
         <FormGroup>
@@ -188,7 +202,6 @@ const Sidebar: React.FC = () => {
               level={0}
               path="/me"
               text={`Signed in as ${user.fname} ${user.sname}`}
-              onClick={() => setSelectedTopLevelIdx(-1)}
             />
           )}
           <NavItem
@@ -207,9 +220,8 @@ const Sidebar: React.FC = () => {
                 newTab={node.newTab}
                 childItems={node.children}
                 expanded={
-                  selectedTopLevelIdx === -1 || selectedTopLevelIdx === idx
+                  activePath === "/" || activePath.startsWith(node.location)
                 }
-                onClick={() => setSelectedTopLevelIdx(idx === 0 ? -1 : idx)}
               />
               {idx !== NavTree.length - 1 && <Menu.Divider />}
             </>

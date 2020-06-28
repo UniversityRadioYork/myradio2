@@ -1,0 +1,12 @@
+.season-episodes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3em;
+  & > * {
+    min-width: 400px;
+    width: 100%;
+  }
+  @media all and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
