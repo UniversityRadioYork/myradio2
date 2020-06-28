@@ -52,7 +52,7 @@ const MyradioApolloProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setClient(createApolloClient(env, envConfig.graphqlBase));
-  }, [envConfig]);
+  }, [envConfig, env]);
 
   if (client === null) {
     return <Spinner />;

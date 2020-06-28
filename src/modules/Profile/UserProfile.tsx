@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Spinner, Intent } from "@blueprintjs/core";
 import ViewProfile, { USER_INFO_FRAGMENT } from "./ViewProfile";
-import { Me } from "./__generated__/Me";
 import { GetUser, GetUserVariables } from "./__generated__/GetUser";
 import { useParams } from "react-router-dom";
 
@@ -17,12 +16,15 @@ const GET_USER = gql`
 `;
 
 const UserProfilePage: React.FC = () => {
-  const params: {id?: string} = useParams();
-  const { loading, error, data } = useQuery<GetUser, GetUserVariables>(GET_USER, {
+  const params: { id?: string } = useParams();
+  const { loading, error, data } = useQuery<GetUser, GetUserVariables>(
+    GET_USER,
+    {
       variables: {
-          id: parseInt(params.id!, 10)
-      }
-  });
+        id: parseInt(params.id!, 10),
+      },
+    }
+  );
 
   if (loading) {
     return (
@@ -41,10 +43,10 @@ const UserProfilePage: React.FC = () => {
           <code>{error.toString()}</code>
         </p>
       </div>
-    )
+    );
   }
 
-  return <ViewProfile user={data!.user!} />
+  return <ViewProfile user={data!.user!} />;
 };
 
 export default UserProfilePage;

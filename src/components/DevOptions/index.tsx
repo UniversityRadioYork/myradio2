@@ -18,7 +18,7 @@ const DevOptions: React.FC = () => {
       client.cache.reset();
     }
     lastEnv.current = globalConfig.myradio.environment;
-  }, [globalConfig.myradio.environment]);
+  }, [globalConfig.myradio.environment, client.cache]);
 
   return (
     <Dialog

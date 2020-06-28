@@ -7,7 +7,7 @@ import {
   SingleShowScreenData,
   SingleShowScreenDataVariables,
 } from "./__generated__/SingleShowScreenData";
-import { Intent, Spinner, Icon, Card } from "@blueprintjs/core";
+import { Intent, Spinner, Icon } from "@blueprintjs/core";
 import {
   SingleShowDetailData,
   SingleShowDetailData_show_allSeasons,

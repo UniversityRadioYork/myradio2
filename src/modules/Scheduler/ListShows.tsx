@@ -69,7 +69,12 @@ function SingleShowView({ show }: { show: SingleShow }) {
           Edit Show
         </button>
         <button className="card-button">Apply for New Season</button>
-        <a className="card-button">View Microsite</a>
+        <a
+          className="card-button"
+          href={`https://ury.org.uk/schedule/shows/${show.itemId}`}
+        >
+          View Microsite
+        </a>
       </div>
     </motion.div>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { UserInfo } from "./__generated__/UserInfo";
-import { Card, Dialog, Button, Intent, Classes } from "@blueprintjs/core";
+import { Dialog, Button, Intent, Classes } from "@blueprintjs/core";
 import UserTimeline, { USER_TIMELINE_FRAGMENT } from "./UserTimeline";
 
 import AllEmailsView from "./AllEmailsView";
@@ -69,13 +69,13 @@ const ViewProfile: React.FC<{ user: UserInfo }> = ({ user }) => {
       )}
       {user.profilePhoto && (
         <img
-          alt={`${user.fname} ${user.sname}'s profile photo`}
+          alt={`${user.fname} ${user.sname}`}
           src={"https://ury.org.uk" + user.profilePhoto.url}
           width={160}
           height={160}
         />
       )}
-      <div dangerouslySetInnerHTML={{ __html: user.bio }}></div>
+      <div dangerouslySetInnerHTML={{ __html: user.bio }} />
 
       <h2>Details</h2>
       {user.publicEmail !== null && (
