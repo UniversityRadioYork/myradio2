@@ -7,7 +7,7 @@ import {
   InputGroup,
   Card,
   Button,
-  Classes
+  Classes,
 } from "@blueprintjs/core";
 import { FormGroupCommonProps } from "./common";
 import { EditorState, RichUtils, Editor } from "draft-js";
@@ -15,7 +15,7 @@ import { stateToHTML } from "draft-js-export-html";
 
 type RichTextField<TData> = FormFieldProps<TData> & FormGroupCommonProps;
 
-export const RichTextField: React.FC<RichTextField<any>> = props => {
+export const RichTextField: React.FC<RichTextField<any>> = (props) => {
   const { methods, validation, label, inline, helperText } = props;
 
   const [editorState, setEditorState] = React.useState(
@@ -70,7 +70,10 @@ export const RichTextField: React.FC<RichTextField<any>> = props => {
         <div className={Classes.INPUT}>
           <Editor
             editorState={editorState}
-            onChange={e => {setEditorState(e); sync()}}
+            onChange={(e) => {
+              setEditorState(e);
+              sync();
+            }}
           />
         </div>
       </Card>

@@ -1,6 +1,6 @@
 import qs from "qs";
 import MyRadioEnvironments from "./environments";
-import {Middleware} from "redux";
+import { Middleware } from "redux";
 
 export interface MyRadioApiConfig {
   apiBase: string;
@@ -9,14 +9,16 @@ export interface MyRadioApiConfig {
 
 let myradioEnvironment: "dev" | "staging" | "prod" = "dev";
 
-export const _syncEnvironmentMiddleware: Middleware = store => next => action => {
+export const _syncEnvironmentMiddleware: Middleware = (store) => (next) => (
+  action
+) => {
   const result = next(action);
   const state = store.getState();
   if (state.GlobalConfig.myradio.environment !== myradioEnvironment) {
     myradioEnvironment = state.GlobalConfig.myradio.environment;
   }
   return result;
-}
+};
 
 type HttpMethod = "GET" | "POST" | "PUT";
 
@@ -50,16 +52,16 @@ export async function makeMyradioRequest(
     query = { ...query, ...args };
     resp = await fetch(conf.apiBase + path + "?" + qs.stringify(query), {
       method: "GET",
-      credentials: "include"
+      credentials: "include",
     });
   } else {
     resp = await fetch(conf.apiBase + path + "?" + qs.stringify(query), {
       method,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(args),
-      credentials: "include"
+      credentials: "include",
     });
   }
   const json = await resp.json();

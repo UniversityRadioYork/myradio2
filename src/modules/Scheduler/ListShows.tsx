@@ -56,11 +56,13 @@ function SingleShowView({ show }: { show: SingleShow }) {
       animate={{ opacity: 1, translateZ: 0 }}
       exit={{ opacity: 0, translateZ: 1000 }}
     >
-      <motion.span className="card-title">{show.title}</motion.span>{" "}
-      <span className="card-subtitle">
-        ({show.allSeasons?.length}{" "}
-        {show.allSeasons?.length === 1 ? "season" : "seasons"})
-      </span>
+      <motion.span className="card-title">
+        {show.title}{" "}
+        <span className="card-subtitle">
+          ({show.allSeasons?.length}{" "}
+          {show.allSeasons?.length === 1 ? "season" : "seasons"})
+        </span>
+      </motion.span>
       <div className="card-buttons">
         <button
           className={classnames("card-button", pending && "pending")}

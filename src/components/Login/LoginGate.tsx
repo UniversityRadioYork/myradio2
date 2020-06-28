@@ -6,7 +6,9 @@ import MyRadioEnvironments from "../../lib/myradio/environments";
 
 const LoginGate: React.FC = ({ children }) => {
   const isSignedIn = useSelector((state: AppState) => state.Login.signedIn);
-  const myrConfig = useSelector((state: AppState) => state.GlobalConfig.myradio);
+  const myrConfig = useSelector(
+    (state: AppState) => state.GlobalConfig.myradio
+  );
   const env = MyRadioEnvironments[myrConfig.environment];
   const dispatch = useDispatch();
 
@@ -45,7 +47,9 @@ const LoginGate: React.FC = ({ children }) => {
           <iframe
             title="Sign in form"
             data-testid="loginForm"
-            src={`${env.webBase}/MyRadio/login/?next=${encodeURIComponent(`${env.webBase}/MyRadio/myr2Handoff?nonav=true`)}&nonav=true`}
+            src={`${env.webBase}/MyRadio/login/?next=${encodeURIComponent(
+              `${env.webBase}/MyRadio/myr2Handoff?nonav=true`
+            )}&nonav=true`}
             className="myr-login-frame"
           />
         </div>

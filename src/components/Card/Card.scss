@@ -21,14 +21,8 @@
   }
 
   .card-subtitle {
-    grid-row: 2;
-    grid-column: 1;
     font-size: 18px;
-    color: #4F4F4F;
-    @media screen and (min-width: 1200px) {
-      grid-row: 1;
-      grid-column: 2;
-    }
+    color: #4f4f4f;
   }
 
   .expando {
@@ -38,7 +32,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    font-size: 14pt;
+    font-size: 14px;
     cursor: pointer;
     .expando-icon {
       margin-right: 0.8em;

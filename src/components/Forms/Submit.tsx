@@ -7,6 +7,10 @@ type SubmitProps<TData extends {}> = FormFieldProps<TData> & {
   intent?: Intent;
 };
 
-export const SubmitButton: React.FC<SubmitProps<any>> = props => (
-  <input type="submit" className={Classes.BUTTON} value={props.text || "Submit"} />
+export const SubmitButton: React.FC<SubmitProps<any>> = (props) => (
+  <input
+    type="submit"
+    className={Classes.BUTTON}
+    value={props.text || "Submit"}
+  />
 );

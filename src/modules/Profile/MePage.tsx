@@ -34,10 +34,10 @@ const MePage: React.FC = () => {
           <code>{error.toString()}</code>
         </p>
       </div>
-    )
+    );
   }
 
-  return <ViewProfile user={data!.me!} />
+  return <ViewProfile user={data!.me!} />;
 };
 
 export default MePage;

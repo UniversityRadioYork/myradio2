@@ -13,8 +13,16 @@ type TextFieldProps<TData> = FormFieldProps<TData> &
     round?: boolean;
   };
 
-export const TextField: React.FC<TextFieldProps<any>> = props => {
-  const { methods, validation, label, inline, helperText, formRef, ...inputProps } = props;
+export const TextField: React.FC<TextFieldProps<any>> = (props) => {
+  const {
+    methods,
+    validation,
+    label,
+    inline,
+    helperText,
+    formRef,
+    ...inputProps
+  } = props;
   return (
     <FormGroup
       label={label}
@@ -24,8 +32,10 @@ export const TextField: React.FC<TextFieldProps<any>> = props => {
       intent={props.intent}
       labelInfo={props.labelInfo}
     >
-      <InputGroup inputRef={methods!.register(validation || {})} {...inputProps} />
+      <InputGroup
+        inputRef={methods!.register(validation || {})}
+        {...inputProps}
+      />
     </FormGroup>
   );
 };
-

@@ -1,2 +1,2 @@
 export { showSubtype } from "./showSubtype";
-export { user } from "./user"
+export { user } from "./user";

@@ -67,12 +67,13 @@ function SeasonEpisodes({
 }: {
   episodes: SingleShowDetailData_show_allSeasons_allTimeslots[];
 }) {
+  const now = new Date();
   return (
     <motion.div className="season-episodes-container">
       <div className="future">
         <h4>Upcoming Episodes</h4>
         {episodes
-          .filter((ep) => isAfter(parseISO(ep.startTime), 1589479200000))
+          .filter((ep) => isAfter(parseISO(ep.startTime), now))
           .map((ep) => (
             <motion.div key={ep.itemId} className="myr-card">
               <div className="card-title">
@@ -93,7 +94,7 @@ function SeasonEpisodes({
       <div className="past">
         <h4>Past Episodes</h4>
         {episodes
-          .filter((ep) => isBefore(parseISO(ep.startTime), 1589479200000))
+          .filter((ep) => isBefore(parseISO(ep.startTime), now))
           .map((ep) => (
             <motion.div key={ep.itemId} className="myr-card">
               <div className="card-title">

@@ -1,5 +1,6 @@
-.btn-link, .card-button {
-  color: #265FBF;
+.btn-link,
+.card-button {
+  color: #265fbf;
   border: none;
   background-color: transparent;
   display: inline-block;
@@ -10,13 +11,14 @@
     animation: btn-pending 1s linear infinite;
   }
   &.danger {
-    color: #BF2626;
+    color: #bf2626;
   }
 }
 
 @keyframes btn-pending {
-  0%, 100% {
-    color: #265FBF;
+  0%,
+  100% {
+    color: #265fbf;
   }
   50% {
     color: #80b1a9;

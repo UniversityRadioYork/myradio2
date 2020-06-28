@@ -28,7 +28,11 @@ export interface UserGetAllEmails_user_allEmails_destination_MailingList {
   name: string;
 }
 
-export type UserGetAllEmails_user_allEmails_destination = UserGetAllEmails_user_allEmails_destination_Officer | UserGetAllEmails_user_allEmails_destination_User | UserGetAllEmails_user_allEmails_destination_Team | UserGetAllEmails_user_allEmails_destination_MailingList;
+export type UserGetAllEmails_user_allEmails_destination =
+  | UserGetAllEmails_user_allEmails_destination_Officer
+  | UserGetAllEmails_user_allEmails_destination_User
+  | UserGetAllEmails_user_allEmails_destination_Team
+  | UserGetAllEmails_user_allEmails_destination_MailingList;
 
 export interface UserGetAllEmails_user_allEmails {
   __typename: "EmailDestination";

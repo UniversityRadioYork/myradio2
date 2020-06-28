@@ -47,24 +47,58 @@ function getEmailReason(
     case "member":
       return <>because it's a personal alias</>;
     case "officer":
-      return <>because of your <em>{
-        (destination as UserGetAllEmails_user_allEmails_destination_Officer)
-          .name
-      }</em> officership</>;
+      return (
+        <>
+          because of your{" "}
+          <em>
+            {
+              (destination as UserGetAllEmails_user_allEmails_destination_Officer)
+                .name
+            }
+          </em>{" "}
+          officership
+        </>
+      );
     case "team":
-      return <>because of your <em>{
-        (destination as UserGetAllEmails_user_allEmails_destination_Team).name
-      } Team</em> membership</>;
+      return (
+        <>
+          because of your{" "}
+          <em>
+            {
+              (destination as UserGetAllEmails_user_allEmails_destination_Team)
+                .name
+            }{" "}
+            Team
+          </em>{" "}
+          membership
+        </>
+      );
     case "list_auto":
-      return <>because you're automatically added to the <em>{
-        (destination as UserGetAllEmails_user_allEmails_destination_MailingList)
-          .name
-      }</em> mailing list</>;
+      return (
+        <>
+          because you're automatically added to the{" "}
+          <em>
+            {
+              (destination as UserGetAllEmails_user_allEmails_destination_MailingList)
+                .name
+            }
+          </em>{" "}
+          mailing list
+        </>
+      );
     case "list_optin":
-      return <>because you've subscribed to the <em>{
-        (destination as UserGetAllEmails_user_allEmails_destination_MailingList)
-          .name
-      }</em> mailing list</>;
+      return (
+        <>
+          because you've subscribed to the{" "}
+          <em>
+            {
+              (destination as UserGetAllEmails_user_allEmails_destination_MailingList)
+                .name
+            }
+          </em>{" "}
+          mailing list
+        </>
+      );
   }
 }
 
