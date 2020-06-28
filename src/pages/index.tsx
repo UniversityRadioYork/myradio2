@@ -26,6 +26,9 @@ export const MyRadio2Pages: React.FC = () => (
         <Route exact path="/" component={HomeScreen} />
         <Route component={MyRadioBodge} />
       </Switch>
+      <footer>
+        <small>MyRadio^2, git hash {process.env.REACT_APP_GIT_SHA}</small>
+      </footer>
     </div>
   </>
 );
