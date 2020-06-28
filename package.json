@@ -57,7 +57,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "apollo:schema": "apollo client:download-schema -c apollo.config.js src/schema.graphql",
-    "apollo:codegen": "apollo client:codegen -c apollo.config.js --target typescript __generated__ && node scripts/loadTypes.js"
+    "apollo:codegen": "apollo client:codegen -c apollo.config.js --target typescript __generated__ && node scripts/loadTypes.js",
+    "prettier": "prettier --write 'src/**/*.{js,ts,jsx,tsx,css,scss}'"
   },
   "eslintConfig": {
     "extends": "react-app"
