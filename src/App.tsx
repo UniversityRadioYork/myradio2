@@ -27,9 +27,6 @@ const App: React.FC = () => {
                 <MyRadio2Pages />
               </div>
             </div>
-            <footer>
-              <small>MyRadio^2, git hash {process.env.REACT_APP_GIT_SHA}</small>
-            </footer>
           </LoginGate>
           <DevOptions />
         </BrowserRouter>
