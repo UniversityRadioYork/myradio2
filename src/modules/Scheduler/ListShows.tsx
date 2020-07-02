@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { SINGLE_SHOW_SCREEN_DATA } from "./SingleShow";
 import { useTransition } from "../../lib/helpers/useTransition";
 import { useDispatch } from "react-redux";
+import Card from "../../components/Card";
 import {
   hideGlobalSpinner,
   showGlobalSpinner,
@@ -50,35 +51,31 @@ function SingleShowView({ show }: { show: SingleShow }) {
   }
 
   return (
-    <motion.div
+    <Card
       className="myr-card"
       initial={{ opacity: 0, translateZ: -1000 }}
       animate={{ opacity: 1, translateZ: 0 }}
       exit={{ opacity: 0, translateZ: 1000 }}
-    >
-      <motion.span className="card-title">
-        {show.title}{" "}
-        <span className="card-subtitle">
-          ({show.allSeasons?.length}{" "}
-          {show.allSeasons?.length === 1 ? "season" : "seasons"})
-        </span>
-      </motion.span>
-      <div className="card-buttons">
-        <button
-          className={classnames("card-button", pending && "pending")}
-          onClick={() => exit(show)}
-        >
-          Edit Show
-        </button>
-        <button className="card-button">Apply for New Season</button>
-        <a
-          className="card-button"
-          href={`https://ury.org.uk/schedule/shows/${show.itemId}`}
-        >
-          View Microsite
-        </a>
-      </div>
-    </motion.div>
+      title={show.title}
+      subtitle={`(${show.allSeasons?.length} ${
+        show.allSeasons?.length === 1 ? "season" : "seasons"
+      })`}
+      buttons={[
+        {
+          label: "Edit Show",
+          action: () => exit(show),
+          pending,
+        },
+        {
+          label: "Apply for New Season",
+          action: () => {},
+        },
+        {
+          label: "View Microsite",
+          href: `https://ury.org.uk/schedule/shows/${show.itemId}`,
+        },
+      ]}
+    />
   );
 }
 

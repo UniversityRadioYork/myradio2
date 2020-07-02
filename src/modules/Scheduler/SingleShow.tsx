@@ -17,6 +17,7 @@ import {
 import { IconNames } from "@blueprintjs/icons";
 import { compareDesc, format, isAfter, isBefore, parseISO } from "date-fns";
 import "./SingleShow.scss";
+import Card from "../../components/Card";
 
 export const SINGLE_SHOW_FRAGMENT = gql`
   fragment SingleShow on Show {
@@ -75,20 +76,16 @@ function SeasonEpisodes({
         {episodes
           .filter((ep) => isAfter(parseISO(ep.startTime), now))
           .map((ep) => (
-            <motion.div key={ep.itemId} className="myr-card">
-              <div className="card-title">
-                Episode {ep.timeslotNumber} &ndash;{" "}
-                <span className="card-subtitle">
-                  {format(parseISO(ep.startTime), "dd/MM/yyyy HH:mm")}
-                </span>
-              </div>
-              <div className="card-buttons">
-                <button className="card-button">Show Planner</button>
-                <button className="card-button">SIS</button>
-                <button className="card-button">WebStudio</button>
-                <button className="card-button danger">Cancel</button>
-              </div>
-            </motion.div>
+            <Card
+              key={ep.itemId}
+              title={`Episode ${ep.timeslotNumber}`}
+              subtitle={format(parseISO(ep.startTime), "dd/MM/yyyy HH:mm")}
+              buttons={[
+                { label: "Plan Show" },
+                { label: "Studio Information Service" },
+                { label: "Cancel Episode", danger: true },
+              ]}
+            />
           ))}
       </div>
       <div className="past">
@@ -96,18 +93,12 @@ function SeasonEpisodes({
         {episodes
           .filter((ep) => isBefore(parseISO(ep.startTime), now))
           .map((ep) => (
-            <motion.div key={ep.itemId} className="myr-card">
-              <div className="card-title">
-                Episode {ep.timeslotNumber} &ndash;{" "}
-                <span className="card-subtitle">
-                  {format(parseISO(ep.startTime), "dd/MM/yyyy HH:mm")}
-                </span>
-              </div>
-              <div className="card-buttons">
-                <button className="card-button">Audio Log</button>
-                <button className="card-button">Mixcloud</button>
-              </div>
-            </motion.div>
+            <Card
+              key={ep.itemId}
+              title={`Episode ${ep.timeslotNumber}`}
+              subtitle={format(parseISO(ep.startTime), "dd/MM/yyyy HH:mm")}
+              buttons={[{ label: "Audio Log" }, { label: "Mixcloud" }]}
+            />
           ))}
       </div>
     </motion.div>
@@ -123,44 +114,21 @@ function ShowSeason({
 
   return (
     <AnimatePresence>
-      <motion.div className="myr-card">
-        <div className="card-title">Season {season.seasonNumber}</div>
-        <div className="card-buttons">
-          <button className="card-button">Edit Season</button>
-        </div>
-        <div className="expando" onClick={() => setExpanded(!expanded)}>
-          <motion.span
-            animate={{ rotate: expanded ? 180 : 0 }}
-            style={{
-              display: "inline-block",
-              transformOrigin: "0.5em center",
-            }}
-          >
-            <Icon
-              icon={IconNames.CHEVRON_DOWN}
-              iconSize={Icon.SIZE_LARGE}
-              className="expando-icon"
-            />
-          </motion.span>
-          View Episodes
-        </div>
-        {expanded && season.allTimeslots !== null && (
-          <motion.div
-            className="body"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <SeasonEpisodes
-              episodes={
-                season.allTimeslots.filter(
-                  (x) => x !== null
-                ) as SingleShowDetailData_show_allSeasons_allTimeslots[]
-              }
-            />
-          </motion.div>
+      <Card
+        title={`Season ${season.seasonNumber}`}
+        buttons={[{ label: "Edit Season", action: () => {} }]}
+        expandoLabel="View Episodes"
+      >
+        {season.allTimeslots !== null && (
+          <SeasonEpisodes
+            episodes={
+              season.allTimeslots.filter(
+                (x) => x !== null
+              ) as SingleShowDetailData_show_allSeasons_allTimeslots[]
+            }
+          />
         )}
-      </motion.div>
+      </Card>
     </AnimatePresence>
   );
 }
@@ -213,10 +181,11 @@ export function SingleShowScreen() {
     const show = baseData.show;
     if (show) {
       return (
-        <motion.div layoutId={`show-${show.itemId}-container`}>
-          <motion.h1 animate layoutId={`title`}>
-            {show.title}
-          </motion.h1>
+        <Card
+          size="giant"
+          title={show.title}
+          breadcrumbs={[{ label: "My Shows", location: "/scheduler/shows" }]}
+        >
           {show.description && (
             <p dangerouslySetInnerHTML={{ __html: show.description }} />
           )}
@@ -236,7 +205,7 @@ export function SingleShowScreen() {
                 ))}
             </>
           )}
-        </motion.div>
+        </Card>
       );
     }
   }

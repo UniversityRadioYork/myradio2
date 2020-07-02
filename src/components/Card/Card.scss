@@ -1,65 +1,79 @@
 .myr-card {
-  margin: 0.4em;
+  margin: 0.7em 0.4em;
   padding: 0.6em;
 
+
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  &.giant {
+    box-shadow: none;
+  }
+
   border-radius: 8px;
 
-  display: grid;
-  grid-template-rows: 1fr auto auto auto;
-  grid-template-columns: auto auto 1fr;
-  grid-gap: 0.5em;
+ display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 
-  .card-title {
-    grid-row: 1;
-    grid-column: 1;
-    display: block;
-    font-size: 18px;
-    & + .card-subtitle {
-      margin-left: 0.5em;
+  .card-header {
+    flex: 1;
+
+    .card-title {
+      display: inline-block;
+      font-size: 18px;
+      color: #212121;
+      & + .card-subtitle {
+        margin-left: 0.5em;
+      }
+    }
+
+    &.giant > .card-title {
+      font-size: 24px;
+    }
+
+    .card-subtitle {
+      font-size: 18px;
+      color: #4F4F4F;
+    }
+
+    .card-buttons {
+      display: inline-block;
+      margin: 0 0 0 auto;
+      float: right;
     }
   }
 
-  .card-subtitle {
-    font-size: 18px;
-    color: #4f4f4f;
-  }
-
   .expando {
-    grid-row: 3;
-    grid-column: 1;
+    flex-basis: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    font-size: 14px;
+    font-size: 14pt;
     cursor: pointer;
-    .expando-icon {
-      margin-right: 0.8em;
+    margin-top: 0.4em;
+    .expando-icon-container {
+      transform-origin: 0.5em center;
+      .expando-icon {
+        display: inline-block;
+        margin-right: 0.8em;
+      }
     }
   }
 
-  .card-buttons {
-    grid-row: 2;
-    grid-column: 1;
-    margin: 0.6em 0 0.6em 0;
-    @media screen and (min-width: 1200px) {
-      grid-row: 2;
-      grid-column: 1;
-      align-self: end;
-    }
+  .card-breadcrumbs {
+    display: block;
+    flex-basis: 1005%;
   }
 
   .card-button {
     font-size: 18px;
-    margin: 0.3em;
+    margin: 0 0.2em;
+    text-decoration: none;
     * {
       display: inline;
     }
   }
 
-  .body {
-    grid-row: 4;
-    grid-column: 1 / 3;
+  .card-body {
   }
 }
