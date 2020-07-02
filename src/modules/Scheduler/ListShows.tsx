@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
-import classnames from "classnames";
 import { SingleShow } from "./__generated__/SingleShow";
 import { AnimatePresence, motion } from "framer-motion";
 import { Intent, Spinner } from "@blueprintjs/core";

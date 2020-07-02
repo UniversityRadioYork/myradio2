@@ -7,14 +7,13 @@ import {
   SingleShowScreenData,
   SingleShowScreenDataVariables,
 } from "./__generated__/SingleShowScreenData";
-import { Intent, Spinner, Icon } from "@blueprintjs/core";
+import { Intent, Spinner } from "@blueprintjs/core";
 import {
   SingleShowDetailData,
   SingleShowDetailData_show_allSeasons,
   SingleShowDetailData_show_allSeasons_allTimeslots,
   SingleShowDetailDataVariables,
 } from "./__generated__/SingleShowDetailData";
-import { IconNames } from "@blueprintjs/icons";
 import { compareDesc, format, isAfter, isBefore, parseISO } from "date-fns";
 import "./SingleShow.scss";
 import Card from "../../components/Card";
@@ -110,8 +109,6 @@ function ShowSeason({
 }: {
   season: SingleShowDetailData_show_allSeasons;
 }) {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <AnimatePresence>
       <Card

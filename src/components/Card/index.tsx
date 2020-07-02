@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion, MotionProps } from "framer-motion";
 import classNames from "classnames";
-import { LocationDescriptorObject } from "history";
-import { useHistory, Link, LinkProps } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
 import "./Card.scss";
 import { Icon } from "@blueprintjs/core";
@@ -44,7 +43,6 @@ export default function Card(props: CardProps) {
     className,
     ...motionProps
   } = props;
-  const history = useHistory();
   const [expanded, setExpanded] = useState(false);
 
   const bodyVisible =
