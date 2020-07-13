@@ -16,10 +16,20 @@ export const MyRadio2Pages: React.FC = () => (
         <Route path="/me" component={MePage} />
         <Route path="/profile/:id" component={UserProfilePage} />
 
-        <AnimateSharedLayout>
-          <Route exact path="/scheduler/shows" component={ListShows} />
-          <Route path="/scheduler/shows/:id" component={SingleShowScreen} />
-        </AnimateSharedLayout>
+        <Route path="/scheduler/shows">
+          {/* <AnimateSharedLayout> */}
+            <Switch>
+              {/* Were it not for the Switch and this Route, we would render SingleShowScreen with an id of "createNew" */}
+              <Route
+                exact
+                path="/scheduler/shows/createNew"
+                component={ListShows}
+              />
+              <Route path="/scheduler/shows/:id" component={SingleShowScreen} />
+              <Route path="/scheduler/shows" key="ListShowsScreen" component={ListShows} />
+            </Switch>
+          {/* </AnimateSharedLayout> */}
+        </Route>
 
         <Route path="/$TEST$/ceedox" component={CeedoxTestPage} />
 

@@ -1,0 +1,271 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+interface MyRadioObject {
+    itemId: Int!
+}
+
+interface Node {
+    id: ID!
+}
+
+union EmailDestinationType = MailingList | Officer | Team | User
+
+type Alias implements MyRadioObject & Node {
+    id: ID!
+    itemId: Int!
+    source: String
+}
+
+type EmailDestination {
+    alias: Alias
+    destination: EmailDestinationType!
+    reason: String!
+    source: String!
+}
+
+type MailingList implements MyRadioObject & Node {
+    address: String
+    areWeAMember: Boolean!
+    haveWeOptedOutOfAuto: Boolean!
+    id: ID!
+    isPublic: Boolean
+    itemId: Int!
+    name: String!
+}
+
+type MemberOfficership {
+    from_date: Date!
+    officer_name: String!
+    officerid: Int!
+    teamid: Int!
+    till_date: Date
+}
+
+type Message {
+    body: String
+    id: ID!
+    location: [String]
+    read: Boolean!
+    source: String
+    time: DateTime!
+    title: String
+    type: Int
+}
+
+type Officer implements MyRadioObject & Node {
+    alias: String
+    description: String
+    history: [Officership]
+    id: ID!
+    itemId: Int!
+    name: String!
+    status: String
+    team: Team
+    type: String
+}
+
+type Officership {
+    User: User!
+    from_date: Date!
+    till_date: Date
+}
+
+type Photo implements MyRadioObject & Node {
+    dateAdded: DateTime!
+    format: String!
+    id: ID!
+    itemId: Int!
+    owner: User!
+    url: String!
+}
+
+type Query {
+    allMailingLists: [MailingList!]
+    allQuotes: [Quote!]
+    allTrainingStatuses: [TrainingStatus!]
+    mailingListByName(name: String!): MailingList
+    me: User
+    node(id: ID): Node
+    season(itemid: Int!): Season
+    show(itemid: Int!): Show
+    timeslot(itemid: Int!): Timeslot
+    user(itemid: Int!): User
+}
+
+type Quote implements Node {
+    date: Date!
+    id: ID!
+    itemId: Int!
+    source: User!
+    text: HTMLString!
+}
+
+type Season implements MyRadioObject & Node {
+    allTimeslots: [Timeslot]
+    firstTime: DateTime
+    id: ID!
+    itemId: Int!
+    seasonNumber: Int!
+    show: Show!
+    subtype: ShowSubtype!
+}
+
+type Show implements MyRadioObject & Node {
+    allSeasons: [Season]
+    credits: [ShowCredit]
+    description: HTMLString!
+    id: ID!
+    itemId: Int!
+    photo: String
+    subtype: ShowSubtype!
+    title: String!
+}
+
+type ShowCredit {
+    User: User
+    type: String
+}
+
+type ShowSubtype implements MyRadioObject & Node {
+    class: String!
+    description: String
+    id: ID!
+    itemId: Int!
+    name: String!
+}
+
+type Team implements MyRadioObject & Node {
+    alias: String
+    currentHolders: [TeamOfficership]
+    description: String
+    history: [TeamOfficership]
+    id: ID!
+    itemId: Int!
+    name: String!
+    status: String
+}
+
+type TeamOfficership {
+    User: User!
+    from_date: Date!
+    position: Officer!
+    till_date: Date
+}
+
+type Timeslot implements MyRadioObject & Node {
+    duration: Duration!
+    endTime: DateTime!
+    id: ID!
+    itemId: Int!
+    messages: [Message]
+    season: Season!
+    startTime: DateTime!
+    timeslotNumber: Int!
+    webpage: String!
+}
+
+type TrainingStatus implements MyRadioObject & Node {
+    awarder: TrainingStatus
+    depends: TrainingStatus
+    detail: String!
+    id: ID!
+    itemId: Int!
+    title: String!
+}
+
+type User implements MyRadioObject & Node {
+    accountLocked: Boolean
+    allEmails: [EmailDestination]
+    allTraining: [UserTrainingStatus]
+    bio: HTMLString
+    college: String
+    eduroam: String
+    email: String
+    fname: String!
+    id: ID!
+    isCurrentlyPaid: Boolean
+    itemId: Int!
+    lastLogin: DateTime
+    localAlias: String
+    localName: String
+    officerships: [MemberOfficership!]
+    phone: String
+    profilePhoto: Photo
+    publicEmail: String
+    shows: [Show!]
+    sname: String!
+    timeline: [UserTimelineEntry!]
+    url: String
+}
+
+type UserTimelineEntry {
+    message: String
+    photo: String
+    timestamp: DateTime
+}
+
+type UserTrainingStatus implements MyRadioObject & Node {
+    awardedBy: User!
+    awardedTime: DateTime!
+    awardedTo: User!
+    awarder: TrainingStatus
+    depends: TrainingStatus
+    detail: String!
+    id: ID!
+    itemId: Int!
+    revokedBy: User
+    revokedTime: DateTime
+    title: String!
+    trainingStatusId: ID!
+    trainingStatusItemId: Int!
+}
+
+enum AuthHook {
+    """
+
+    Only valid on MyRadio_User fields.
+    Grants access if we are looking at the current user, or they have \"View Any Profile\".
+    """
+    ViewMember
+    """
+
+    Only valid on MyRadio_User fields.
+    Grants access if we are looking at the current user, or they have \"View Any Profile\", *or* they are an officer.
+    """
+    ViewOfficer
+    """
+
+    Only valid on MyRadio_Shows/Seasons/Timeslots.
+    Grants access if the current user has \"View Any Show\" or is credited on the show.
+    """
+    ViewShow
+}
+
+enum CallingConvention {
+    FirstArgCurrentUser
+}
+
+enum Coercion {
+    "If the value is false, replace it with null."
+    FalseToNull
+}
+
+
+"An RFC3339 date-time string, such as 2007-12-03T10:15:30Z."
+scalar DateTime
+
+"Equivalent to a string for all intents and purposes, but used to signal that it may contain arbitrary HTML."
+scalar HTMLString
+
+"A time duration, such as 01:00:00"
+scalar Duration
+
+"An RFC3339 date string, such as 2007-12-03"
+scalar Date
+
+"An RFC3339 time string, such as 10:15:30Z."
+scalar Time

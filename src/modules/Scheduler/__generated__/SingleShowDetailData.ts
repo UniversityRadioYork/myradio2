@@ -21,9 +21,7 @@ export interface SingleShowDetailData_show_allSeasons {
   itemId: number;
   seasonNumber: number;
   firstTime: any | null;
-  allTimeslots:
-    | (SingleShowDetailData_show_allSeasons_allTimeslots | null)[]
-    | null;
+  allTimeslots: (SingleShowDetailData_show_allSeasons_allTimeslots | null)[] | null;
 }
 
 export interface SingleShowDetailData_show {
