@@ -184,7 +184,7 @@ const Sidebar: React.FC = () => {
   const navWrapperRef = useRef<HTMLDivElement>(null);
   const navWrapperHeight = useMemo(
     () => navWrapperRef.current?.getBoundingClientRect().height,
-    [navWrapperRef.current, onSmallScreen]
+    [onSmallScreen] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

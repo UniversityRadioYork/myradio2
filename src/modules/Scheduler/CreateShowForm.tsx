@@ -7,6 +7,7 @@ import { CreateShowInput } from "../../__generated__/globalTypes";
 import { Colors } from "@blueprintjs/core";
 import { Prompt } from "react-router-dom";
 
+// eslint-disable-next-line
 const MUT_CREATE_SHOW = gql`
   mutation CreateShow($input: CreateShowInput) {
     createShow(input: $input) {

@@ -7,7 +7,7 @@ import MePage from "../modules/Profile/MePage";
 import UserProfilePage from "../modules/Profile/UserProfile";
 import ListShows from "../modules/Scheduler/ListShows";
 import { SingleShowScreen } from "../modules/Scheduler/SingleShow";
-import { AnimateSharedLayout } from "framer-motion";
+// import { AnimateSharedLayout } from "framer-motion";
 
 export const MyRadio2Pages: React.FC = () => (
   <>

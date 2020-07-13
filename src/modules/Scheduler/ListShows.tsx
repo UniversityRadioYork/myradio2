@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { SingleShow } from "./__generated__/SingleShow";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { Intent, Spinner, Button, Dialog } from "@blueprintjs/core";
 import { useQuery } from "@apollo/react-hooks";
 import { MyShows, MyShowsVariables } from "./__generated__/MyShows";
