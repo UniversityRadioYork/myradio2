@@ -31,42 +31,9 @@
   height: 100%;
 }
 
-.myr-navbar {
-  padding: 8px inherit;
-  z-index: 1000;
-}
-
-.myradio-logo {
-  display: block;
-  max-height: 2em;
-  margin: 0.3em auto;
-}
-
-.bp3-menu-header.bigger-margin {
-  margin: 10px 5px;
-}
-
 @media screen and (min-width: 900px) {
   .myr-main {
     margin-left: 300px;
-  }
-
-  .myr-navbar {
-    display: block;
-    // position: absolute;
-    left: 268px;
-    max-width: calc(100% - 268px);
-  }
-
-  .myr-sidebar {
-    display: block;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 268px;
-    height: 100vh;
-    //overflow-y: scroll;
-    max-height: 100vh;
   }
 }
 

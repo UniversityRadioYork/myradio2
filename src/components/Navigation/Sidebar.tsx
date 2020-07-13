@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import classNames from "classnames";
 import {
@@ -8,6 +8,7 @@ import {
   Classes,
   Icon,
   Spinner,
+  Button,
 } from "@blueprintjs/core";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -18,6 +19,7 @@ import * as devOptionsState from "../DevOptions/state";
 
 import "./Sidebar.scss";
 import { IconNames } from "@blueprintjs/icons";
+import { useMedia } from "../../lib/helpers/useMedia";
 
 const NavItem: React.FC<{
   text: string;
@@ -174,13 +176,28 @@ const Sidebar: React.FC = () => {
     (state) => state.Nav.globalSpinnerVisible
   );
 
+  const onSmallScreen = useMedia(["(max-width: 900px)"], [true], false);
+  const [expanded, setExpanded] = useState(false);
+
   const location = useHistory().location;
   const activePath = location.pathname;
+  const navWrapperRef = useRef<HTMLDivElement>(null);
+  const navWrapperHeight = useMemo(
+    () => navWrapperRef.current?.getBoundingClientRect().height,
+    [navWrapperRef.current, onSmallScreen]
+  );
 
   return (
     <div className={classNames("myr-sidebar", Classes.ELEVATION_2)}>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: "flex", alignItems: "center", background: "white", zIndex: 90 }}>
         <img className="myradio-logo" src={MyRadioLogo} alt="" />
+        {onSmallScreen && (
+          <Button
+            minimal
+            icon={IconNames.MENU}
+            onClick={() => setExpanded(!expanded)}
+          />
+        )}
         <Spinner
           size={Spinner.SIZE_SMALL}
           className={classNames(
@@ -190,7 +207,25 @@ const Sidebar: React.FC = () => {
         />
       </div>
 
-      <div>
+      <motion.div
+        variants={{
+          visible: {
+            display: "block",
+            y: 0,
+          },
+          hidden: {
+            y: -(navWrapperHeight || 1000),
+            transitionEnd: {
+              display: "none",
+            },
+          },
+        }}
+        transition={{ type: "tween", ease: "anticipate" }}
+        initial={onSmallScreen ? "hidden" : "visible"}
+        animate={onSmallScreen && !expanded ? "hidden" : "visible"}
+        ref={navWrapperRef}
+        style={{ zIndex: 80 }}
+      >
         <FormGroup>
           <InputGroup leftIcon="search" placeholder="Search..." />
         </FormGroup>
@@ -226,7 +261,7 @@ const Sidebar: React.FC = () => {
             </>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </div>
   );
 };
