@@ -28,3 +28,4 @@ yarn-error.log*
 deps.png
 
 .graphqlconfig
+schema.graphql
