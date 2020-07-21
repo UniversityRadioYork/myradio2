@@ -9,6 +9,14 @@ import { Prompt } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { CreateShowFormData } from "./__generated__/CreateShowFormData";
 import { IconNames } from "@blueprintjs/icons";
+import {
+  Form,
+  TextField,
+  SelectField,
+  TagField,
+  SubmitButton,
+} from "../../components/Forms";
+import { CreditsField } from "../../components/Forms/CreditsField";
 
 const QUERY_CREATE_SHOW_FORM_DATA = gql`
   query CreateShowFormData {
@@ -42,12 +50,12 @@ const initialValues: CreateShowInput = {
   title: "",
   description: "",
   credits: {
-    memberid: [null],
-    credittype: [1],
+    memberid: [],
+    credittype: [],
   },
-  subtype: "",
+  subtype: "regular",
   tags: [],
-  genres: [],
+  genres: [1],
   mixclouder: true,
 };
 
@@ -58,8 +66,8 @@ const ShowSchema = Yup.object().shape({
     .required()
     .shape({
       memberid: Yup.array()
-        .of(Yup.number())
-        .min(1),
+        .of(Yup.number().typeError("You must select a member to be credited"))
+        .min(1, "At least one person must be credited"),
       credittype: Yup.array()
         .of(Yup.number())
         .min(1),
@@ -79,10 +87,12 @@ export default function CreateShowForm() {
     data: formData,
     loading: formDataLoading,
     error: formDataLoadError,
-  } = useQuery<CreateShowFormData>(QUERY_CREATE_SHOW_FORM_DATA);
+  } = useQuery<CreateShowFormData>(QUERY_CREATE_SHOW_FORM_DATA, {
+    onCompleted: (data) => {},
+  });
 
   return (
-    <>
+    <div>
       <h1>Create New Show</h1>
       <p>
         Fill out this form to create a new show. A show comes with its own
@@ -103,154 +113,68 @@ export default function CreateShowForm() {
           </p>
         </Callout>
       )}
-      <Formik
+      <Form
         initialValues={initialValues}
-        onSubmit={() => {
-          throw new Error("TODO");
-        }}
         validationSchema={ShowSchema}
+        onSubmit={(values, helpers) => {
+          console.log(values, helpers);
+        }}
       >
-        {(formik) => (
-          <form
-            onSubmit={formik.handleSubmit}
-            style={{ display: "grid", gridTemplateColumns: "auto 1fr" }}
-          >
-            <Prompt
-              when={Object.keys(formik.touched).some(
-                (k) => (formik.touched as any)[k]
-              )}
-              message="You have unsaved changes. Are you sure you want to close this page?"
-            />
+        <TextField
+          name="title"
+          label="Show Name"
+          id="show-name"
+          helper="Give your show a name. Try and make it unique."
+        />
 
-            <label htmlFor="show-title" style={{ gridColumn: 1 }}>
-              Show Name
-            </label>
-            <div className="bp3-form-content" style={{ gridColumn: 2 }}>
-              <input
-                id="show-title"
-                type="text"
-                className={classNames({
-                  "bp3-intent-danger":
-                    formik.touched.title && formik.errors.title,
-                })}
-                {...formik.getFieldProps("title")}
-              />
-              <div className="bp3-helper-text">
-                Give your show a name. Try and make it unique.
-              </div>
-              {/* TODO uniqueness checking */}
-              {formik.touched.title && formik.errors.title && (
-                <div
-                  className="bp3-helper-text"
-                  style={{ color: Colors.RED1, fontWeight: "bold" }}
-                >
-                  {formik.errors.title}
-                </div>
-              )}
-            </div>
+        <SelectField
+          name="subtype"
+          id="show-type"
+          label="Show Type"
+          helper="What type is your show? If unsure, select Regular"
+          values={
+            formDataLoading
+              ? "loading"
+              : formData?.allSubtypes?.map((sub) => ({
+                  key: sub.id,
+                  value: sub.class,
+                  label: sub.name,
+                })) || []
+          }
+        />
 
-            <label htmlFor="show-title" style={{ gridColumn: 1 }}>
-              Type
-            </label>
-            <div className="bp3-form-content" style={{ gridColumn: 2 }}>
-              <select {...formik.getFieldProps("subtype")}>
-                {formDataLoading ? (
-                  <option disabled>Loading...</option>
-                ) : (
-                  formData?.allSubtypes?.map((subtype) => (
-                    <option key={subtype.id} value={subtype.class}>
-                      {subtype.name}
-                    </option>
-                  ))
-                )}
-              </select>
-              <div className="bp3-helper-text">
-                What type is your show? If unsure, leave it as Regular.
-              </div>
-              {/* TODO uniqueness checking */}
-              {formik.touched.subtype && formik.errors.subtype && (
-                <div
-                  className="bp3-helper-text"
-                  style={{ color: Colors.RED1, fontWeight: "bold" }}
-                >
-                  {formik.errors.subtype}
-                </div>
-              )}
-            </div>
+        <SelectField
+          name="genres[0]"
+          id="show-genre"
+          label="Genre"
+          helper="What genre of music do you play, if any?"
+          values={
+            formDataLoading
+              ? "loading"
+              : formData?.allGenres?.map((g) => ({
+                  key: g.value.toString(10),
+                  value: g.value.toString(10),
+                  label: g.text,
+                })) || []
+          }
+        />
 
-            <label htmlFor="show-title" style={{ gridColumn: 1 }}>
-              Genre
-            </label>
-            <div className="bp3-form-content" style={{ gridColumn: 2 }}>
-              <select {...formik.getFieldProps("genres[0]")}>
-                {formDataLoading ? (
-                  <option disabled>Loading...</option>
-                ) : (
-                  formData?.allGenres?.map((genre) => (
-                    <option key={genre.value} value={genre.value}>
-                      {genre.text}
-                    </option>
-                  ))
-                )}
-              </select>
-              <div className="bp3-helper-text">
-                What genre of music do you play, if any?
-              </div>
-              {/* TODO uniqueness checking */}
-              {formik.touched.genres && formik.errors.genres && (
-                <div
-                  className="bp3-helper-text"
-                  style={{ color: Colors.RED1, fontWeight: "bold" }}
-                >
-                  {formik.errors.genres}
-                </div>
-              )}
-            </div>
+        <CreditsField
+          name="credits"
+          id="show-credits"
+          label="Credits"
+          helper="Who's featured on your show?"
+        />
 
-            <label htmlFor="show-title" style={{ gridColumn: 1 }}>
-              Credits
-            </label>
-            <div className="bp3-form-content" style={{ gridColumn: 2 }}>
-              {formik.values.credits.memberid.map((_, idx) => (
-                <div key={idx}>
-                  <Button intent={Intent.DANGER} icon={IconNames.TRASH} />
-                  <input
-                    type="number"
-                    {...formik.getFieldProps(`credits.memberid[${idx}]`)}
-                  />
-                  <select
-                    {...formik.getFieldProps(`credits.credittype[${idx}]`)}
-                  >
-                    {formDataLoading ? (
-                      <option disabled>Loading...</option>
-                    ) : (
-                      formData?.allCreditTypes?.map((ct) => (
-                        <option key={ct.value} value={ct.value}>
-                          {ct.text}
-                        </option>
-                      ))
-                    )}
-                  </select>
-                </div>
-              ))}
-              <Button onClick={() => formik.setFieldValue("credits", {
-                memberid: [...formik.values.credits.memberid, null],
-                credittype: [...formik.values.credits.credittype, 1]
-              }, false)}>Add New</Button>
-              <div className="bp3-helper-text">Who's on your show?</div>
-              {/* TODO uniqueness checking */}
-              {formik.touched.credits && formik.errors.credits && (
-                <div
-                  className="bp3-helper-text"
-                  style={{ color: Colors.RED1, fontWeight: "bold" }}
-                >
-                  {formik.errors.credits}
-                </div>
-              )}
-            </div>
-          </form>
-        )}
-      </Formik>
-    </>
+        <TagField
+          name="tags"
+          id="show-tags"
+          label="Tags"
+          helper="Give your show a set of tags that describe it."
+        />
+
+        <SubmitButton />
+      </Form>
+    </div>
   );
 }

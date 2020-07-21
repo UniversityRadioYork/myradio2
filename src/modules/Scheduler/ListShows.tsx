@@ -156,7 +156,11 @@ export default function ListShows() {
         exact
         path="/scheduler/shows/createNew"
         children={({ match }) => (
-          <Dialog isOpen={match !== null} onClose={() => history.push("/scheduler/shows")} style={{ background: "white", padding: "2em" }}>
+          <Dialog
+            isOpen={match !== null}
+            onClose={() => history.push("/scheduler/shows")}
+            style={{ background: "white", padding: "2em", minWidth: 750 /* TODO not great on phones */ }}
+          >
             <CreateShowForm />
           </Dialog>
         )}

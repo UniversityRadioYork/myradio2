@@ -1,0 +1,25 @@
+.form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+
+    padding: 0.4em;
+
+    grid-gap: 0.7em;
+
+    min-width: 400px;
+
+    .form-label {
+        grid-column: 1;
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .form-field {
+        grid-column: 2;
+    }
+
+    .popover-hack .bp3-popover-target {
+        width: 100%;
+    }
+}
