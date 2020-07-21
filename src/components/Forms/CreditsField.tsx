@@ -1,8 +1,6 @@
 import React from "react";
 import {
   useFormikContext,
-  FormikTouched,
-  FormikErrors,
   FieldInputProps,
 } from "formik";
 import gql from "graphql-tag";
@@ -120,6 +118,14 @@ export function CreditsField(props: CreditsFieldProps) {
               ? (formik.errors[props.name] as any)?.memberid
               : ""}
           </div>
+        )}
+        {error && (
+            <div
+            className="bp3-helper-text"
+            style={{ color: Colors.RED1, fontWeight: "bold" }}
+          >
+              Failed to load credit types! <code>{error.toString()}</code>
+            </div>
         )}
       </div>
     </>

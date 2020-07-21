@@ -11,7 +11,7 @@ export interface TextFieldProps {
 }
 
 export function TextField(props: TextFieldProps) {
-  const [field, meta, helpers] = useField(props.name);
+  const [field, meta, _] = useField(props.name);
   const formik = useFormikContext();
   return (
     <>

@@ -1,14 +1,10 @@
 import React from "react";
 import gql from "graphql-tag";
-import classNames from "classnames";
-import { Formik } from "formik";
 import * as Yup from "yup";
 import { CreateShowInput } from "../../__generated__/globalTypes";
-import { Colors, Intent, Callout, Button } from "@blueprintjs/core";
-import { Prompt } from "react-router-dom";
+import { Intent, Callout } from "@blueprintjs/core";
 import { useQuery } from "@apollo/react-hooks";
 import { CreateShowFormData } from "./__generated__/CreateShowFormData";
-import { IconNames } from "@blueprintjs/icons";
 import {
   Form,
   TextField,
@@ -87,9 +83,7 @@ export default function CreateShowForm() {
     data: formData,
     loading: formDataLoading,
     error: formDataLoadError,
-  } = useQuery<CreateShowFormData>(QUERY_CREATE_SHOW_FORM_DATA, {
-    onCompleted: (data) => {},
-  });
+  } = useQuery<CreateShowFormData>(QUERY_CREATE_SHOW_FORM_DATA);
 
   return (
     <div>

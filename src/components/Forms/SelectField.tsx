@@ -18,7 +18,7 @@ export interface SelectFieldProps {
 }
 
 export function SelectField(props: SelectFieldProps) {
-  const [field, meta, helpers] = useField(props.name);
+  const [field, meta, _helpers] = useField(props.name);
   const formik = useFormikContext();
   return (
     <>

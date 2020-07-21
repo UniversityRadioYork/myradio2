@@ -12,9 +12,8 @@ import {
 import {
   MemberField_SearchMembers,
   MemberField_SearchMembersVariables,
-  MemberField_SearchMembers_findMemberByName,
 } from "./__generated__/MemberField_SearchMembers";
-import { MenuItem, Intent } from "@blueprintjs/core";
+import { MenuItem, Intent, Spinner } from "@blueprintjs/core";
 
 const QUERY_GET_USER_INFO = gql`
   query MemberField_GetUserInfo($memberid: Int!) {
@@ -42,11 +41,12 @@ const QUERY_SEARCH_MEMBERS = gql`
   }
 `;
 
-type FieldletUserInfo = (
-  Omit<MemberField_GetUserInfo_user, "__typename" | "id"> & {
-    id: string | number
-  }
-);
+type FieldletUserInfo = Omit<
+  MemberField_GetUserInfo_user,
+  "__typename" | "id"
+> & {
+  id: string | number;
+};
 
 const MemberSuggest = Suggest.ofType<FieldletUserInfo>();
 
@@ -60,7 +60,7 @@ export function MemberFieldlet(props: MemberFieldletProps) {
   const apollo = useApolloClient();
   const [
     getMemberData,
-    { data: memberData, loading: memberDataLoading, error: memberDataError },
+    { data: memberData, loading: memberDataLoading }, // TODO error handling
   ] = useLazyQuery<MemberField_GetUserInfo, MemberField_GetUserInfoVariables>(
     QUERY_GET_USER_INFO
   );
@@ -69,11 +69,11 @@ export function MemberFieldlet(props: MemberFieldletProps) {
     if (typeof field.value === "number" && field.value > 0) {
       getMemberData({ variables: { memberid: field.value } });
     }
-  }, [field.value]);
+  }, [field.value, getMemberData]);
 
   const [
     search,
-    { data: searchResults, loading: searching, error: searchError },
+    { data: searchResults, loading: searching }, // TODO error handling
   ] = useLazyQuery<
     MemberField_SearchMembers,
     MemberField_SearchMembersVariables
@@ -99,31 +99,34 @@ export function MemberFieldlet(props: MemberFieldletProps) {
   );
 
   return (
-    <MemberSuggest
-      selectedItem={memberData?.user}
-      items={searchResults?.findMemberByName || []}
-      onItemSelect={(val) => helpers.setValue(val.itemId)}
-      inputValueRenderer={(item) =>
-        typeof item === "object"
-          ? `${item.fname} ${item.sname} (${item.localAlias || item.eduroam})`
-          : "Loading..."
-      }
-      className="popover-hack"
-      itemRenderer={(item, props) => (
-        <MenuItem
-          key={item.itemId}
-          text={`${item.fname} ${item.sname} (${item.localAlias ||
-            item.eduroam})`}
-          onClick={props.handleClick}
-          active={props.modifiers.active}
-          disabled={props.modifiers.disabled}
-        />
-      )}
-      onQueryChange={debouncedSearch}
-      inputProps={{
-        intent: meta.touched && !!meta.error ? Intent.DANGER : undefined
-      }}
-      disabled={formik.isSubmitting}
-    />
+    <span>
+      <MemberSuggest
+        selectedItem={memberData?.user}
+        items={searchResults?.findMemberByName || []}
+        onItemSelect={(val) => helpers.setValue(val.itemId)}
+        inputValueRenderer={(item) =>
+          !memberDataLoading && typeof item === "object"
+            ? `${item.fname} ${item.sname} (${item.localAlias || item.eduroam})`
+            : "Loading..."
+        }
+        className="popover-hack"
+        itemRenderer={(item, props) => (
+          <MenuItem
+            key={item.itemId}
+            text={`${item.fname} ${item.sname} (${item.localAlias ||
+              item.eduroam})`}
+            onClick={props.handleClick}
+            active={props.modifiers.active}
+            disabled={props.modifiers.disabled}
+          />
+        )}
+        onQueryChange={debouncedSearch}
+        inputProps={{
+          intent: meta.touched && !!meta.error ? Intent.DANGER : undefined,
+        }}
+        disabled={formik.isSubmitting}
+      />
+      {searching && <Spinner size={Spinner.SIZE_SMALL} />}
+    </span>
   );
 }

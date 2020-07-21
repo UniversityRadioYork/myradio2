@@ -83,7 +83,7 @@ export default function Card(props: CardProps) {
         </TitleType>
         {buttons && (
           <div className="card-buttons">
-            {buttons.map((btn, idx) => {
+            {buttons.map((btn) => {
               const ButtonType = !!btn.href ? motion.a : motion.div;
               return (
                 <ButtonType

@@ -10,7 +10,7 @@ export interface TagFieldProps {
 }
 
 export function TagField(props: TagFieldProps) {
-  const [field, meta, helpers] = useField(props.name);
+  const [_, meta, helpers] = useField(props.name);
   const formik = useFormikContext();
   return (
     <>
