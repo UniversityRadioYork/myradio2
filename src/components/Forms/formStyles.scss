@@ -50,7 +50,7 @@
     }
 
     .form-helper {
-        color: $pt-text-color-muted;
+        color: darken($pt-text-color-muted, 15%); // ree wcag
         font-size: $pt-font-size-small;
         margin-top: $pt-grid-size / 2;
         &.error {
