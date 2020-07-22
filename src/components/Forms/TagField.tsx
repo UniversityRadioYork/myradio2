@@ -23,6 +23,7 @@ export function TagField(props: TagFieldProps) {
           onChange={((values: string[]) => helpers.setValue(values)) as any}
           intent={meta.error ? Intent.DANGER : undefined}
           disabled={formik.isSubmitting}
+          inputProps={{ id: props.id }}
         />
         {typeof props.helper === "string" && (
           <div className="form-helper">{props.helper}</div>

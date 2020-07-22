@@ -190,7 +190,7 @@ const Sidebar: React.FC = () => {
   return (
     <div className={classNames("myr-sidebar", Classes.ELEVATION_2)}>
       <div style={{ display: "flex", alignItems: "center", background: "white", zIndex: 90 }}>
-        <img className="myradio-logo" src={MyRadioLogo} alt="" />
+        <img className="myradio-logo" src={MyRadioLogo} alt="MyRadio Logo" />
         {onSmallScreen && (
           <Button
             minimal

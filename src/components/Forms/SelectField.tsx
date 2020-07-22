@@ -27,6 +27,7 @@ export function SelectField(props: SelectFieldProps) {
       </label>
       <div className="bp3-form-content form-field">
         <HTMLSelect
+          id={props.id}
           className={classNames(
             meta.touched && meta.error && "bp3-intent-danger"
           )}
