@@ -10,12 +10,14 @@ export function SubmitButton(props: SubmitButtonProps) {
   const formik = useFormikContext();
 
   return (
-    <Button
-      intent={Intent.PRIMARY}
-      disabled={formik.isSubmitting}
-      onClick={() => formik.submitForm()}
-      text={props.label || "Submit"}
-      loading={formik.isSubmitting}
-    />
+    <div className="submit-button">
+      <Button
+        intent={Intent.PRIMARY}
+        disabled={formik.isSubmitting}
+        onClick={() => formik.submitForm()}
+        text={props.label || "Submit"}
+        loading={formik.isSubmitting}
+      />
+    </div>
   );
 }

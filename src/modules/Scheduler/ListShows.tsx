@@ -159,7 +159,7 @@ export default function ListShows() {
           <Dialog
             isOpen={match !== null}
             onClose={() => history.push("/scheduler/shows")}
-            style={{ background: "white", padding: "2em", minWidth: 750 /* TODO not great on phones */ }}
+            style={{ background: "white", padding: "2em", width: "auto", maxWidth: 980 }}
           >
             <CreateShowForm />
           </Dialog>

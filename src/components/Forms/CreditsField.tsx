@@ -51,7 +51,7 @@ export function CreditsField(props: CreditsFieldProps) {
         {props.label}
       </label>
       <div className="bp3-form-content form-field">
-        <div style={{ display: "grid", gridTemplateColumns: "64px 1fr auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "32px 1fr auto" }}>
           {formik.values[props.name].memberid.map((_: any, idx: number) => (
             <>
               <Button

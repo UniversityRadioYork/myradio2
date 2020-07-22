@@ -1,7 +1,14 @@
 .form {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
+    grid-auto-rows: auto;
+    grid-template-areas: "label field";
+
+    @media all and (max-width: 600px) {
+        grid-template-columns: auto;
+        grid-template-areas: "label" "field";
+        grid-gap: none;
+    }
 
     padding: 0.4em;
 
@@ -10,13 +17,28 @@
     min-width: 400px;
 
     .form-label {
-        grid-column: 1;
+        grid-area: label;
+        grid-row: auto;
         text-align: right;
         font-weight: bold;
+        @media all and (max-width: 600px) {
+            text-align: left;
+            margin-bottom: none;
+        }
     }
 
     .form-field {
-        grid-column: 2;
+        grid-area: field;
+        grid-row: auto;
+    }
+
+    .form-label, .form-field {
+        margin-bottom: 1em;
+    }
+
+    .submit-button {
+        grid-area: field;
+        grid-row: auto;
     }
 
     .popover-hack .bp3-popover-target {
