@@ -5,7 +5,7 @@ import {
 } from "formik";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import { Button, Intent, Colors, HTMLSelect } from "@blueprintjs/core";
+import { Button, Intent, HTMLSelect } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { CreditsField_CreditTypes } from "./__generated__/CreditsField_CreditTypes";
 import { MemberFieldlet } from "./MemberFieldlet";
@@ -51,7 +51,7 @@ export function CreditsField(props: CreditsFieldProps) {
         {props.label}
       </label>
       <div className="bp3-form-content form-field">
-        <div style={{ display: "grid", gridTemplateColumns: "32px 1fr auto" }}>
+        <div className="form-field-credits">
           {formik.values[props.name].memberid.map((_: any, idx: number) => (
             <>
               <Button
@@ -103,12 +103,11 @@ export function CreditsField(props: CreditsFieldProps) {
         >
           Add New
         </Button>
-        <div className="bp3-helper-text">Who's on your show?</div>
+        <div className="form-helper">Who's on your show?</div>
         {/* TODO uniqueness checking */}
         {formik.touched[props.name] && formik.errors[props.name] && (
           <div
-            className="bp3-helper-text"
-            style={{ color: Colors.RED1, fontWeight: "bold" }}
+            className="form-helper error"
           >
             {Array.isArray((formik.errors[props.name] as any).memberid)
               ? (formik.errors[props.name] as any).memberid.filter(
@@ -121,8 +120,7 @@ export function CreditsField(props: CreditsFieldProps) {
         )}
         {error && (
             <div
-            className="bp3-helper-text"
-            style={{ color: Colors.RED1, fontWeight: "bold" }}
+            className="form-helper error"
           >
               Failed to load credit types! <code>{error.toString()}</code>
             </div>

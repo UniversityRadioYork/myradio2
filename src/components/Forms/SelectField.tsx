@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { useField, FieldInputProps, useFormikContext } from "formik";
-import { Colors, HTMLSelect } from "@blueprintjs/core";
+import { HTMLSelect } from "@blueprintjs/core";
 
 interface SelectFieldValue {
   key: string;
@@ -43,14 +43,13 @@ export function SelectField(props: SelectFieldProps) {
             ))
           )}
         </HTMLSelect>
-        <div className="bp3-helper-text">
+        <div className="form-helper">
           What type is your show? If unsure, leave it as Regular.
         </div>
         {/* TODO uniqueness checking */}
         {meta.touched && meta.error && (
           <div
-            className="bp3-helper-text"
-            style={{ color: Colors.RED1, fontWeight: "bold" }}
+            className="form-helper error"
           >
             {meta.error}
           </div>

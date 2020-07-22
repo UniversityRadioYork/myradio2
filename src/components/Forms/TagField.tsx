@@ -1,6 +1,6 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
-import { TagInput, Colors, Intent } from "@blueprintjs/core";
+import { TagInput, Intent } from "@blueprintjs/core";
 
 export interface TagFieldProps {
   name: string;
@@ -25,12 +25,11 @@ export function TagField(props: TagFieldProps) {
           disabled={formik.isSubmitting}
         />
         {typeof props.helper === "string" && (
-          <div className="bp3-helper-text">{props.helper}</div>
+          <div className="form-helper">{props.helper}</div>
         )}
         {meta.touched && meta.error && (
           <div
-            className="bp3-helper-text"
-            style={{ color: Colors.RED1, fontWeight: "bold" }}
+            className="form-helper error"
           >
             {meta.error}
           </div>

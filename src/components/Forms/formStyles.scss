@@ -1,3 +1,5 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
 .form {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -39,6 +41,22 @@
     .submit-button {
         grid-area: field;
         grid-row: auto;
+    }
+
+    .form-field-credits {
+        display: grid;
+        grid-template-columns: 32px 1fr auto;
+        grid-auto-rows: auto;
+    }
+
+    .form-helper {
+        color: $pt-text-color-muted;
+        font-size: $pt-font-size-small;
+        margin-top: $pt-grid-size / 2;
+        &.error {
+            color: $red1;
+            font-weight: bold;
+        }
     }
 
     .popover-hack .bp3-popover-target {

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { useField, useFormikContext } from "formik";
-import { Colors, Classes } from "@blueprintjs/core";
+import { Classes } from "@blueprintjs/core";
 
 export interface TextFieldProps {
   name: string;
@@ -23,20 +23,18 @@ export function TextField(props: TextFieldProps) {
           id={props.id}
           type="text"
           className={classNames(
-            "form-field",
             Classes.INPUT,
-            meta.touched && meta.error && "bp3-intent-danger"
+            meta.touched && meta.error && Classes.INTENT_DANGER
           )}
           disabled={formik.isSubmitting}
           {...field}
         />
         {typeof props.helper === "string" && (
-          <div className="bp3-helper-text">{props.helper}</div>
+          <div className="form-helper">{props.helper}</div>
         )}
         {meta.touched && meta.error && (
           <div
-            className="bp3-helper-text"
-            style={{ color: Colors.RED1, fontWeight: "bold" }}
+            className="form-helper error"
           >
             {meta.error}
           </div>
