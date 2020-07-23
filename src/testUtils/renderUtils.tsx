@@ -4,10 +4,12 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
+import * as history from "history";
+import { Router } from "react-router-dom";
 
-export function renderWithRedux(
+export function renderInAppContext(
   component: React.ReactNode,
-  { initialState = rootReducer(undefined, { type: "$INIT" }) }
+  { initialState = rootReducer(undefined, { type: "$INIT" }) } = {}
 ) {
   const actions: Action[] = [];
   const observerMiddleware: Middleware = () => (next) => (action) => {
@@ -20,6 +22,8 @@ export function renderWithRedux(
     preloadedState: initialState,
     middleware: [observerMiddleware, ...getDefaultMiddleware()],
   });
+
+  const hist = history.createMemoryHistory();
 
   const utils = {
     dispatch(action: Action) {
@@ -34,7 +38,12 @@ export function renderWithRedux(
   };
 
   return {
-    ...render(<Provider store={store}>{component}</Provider>),
+    ...render(
+      <Provider store={store}>
+        <Router history={hist}>{component}</Router>
+      </Provider>
+    ),
     ...utils,
+    history: hist
   };
 }
