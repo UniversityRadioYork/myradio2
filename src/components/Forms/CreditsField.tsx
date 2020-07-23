@@ -100,7 +100,9 @@ export function CreditsField(props: CreditsFieldProps) {
         >
           Add New
         </Button>
-        <div className="form-helper">Who's on your show?</div>
+        {typeof props.helper === "string" && (
+          <div className="form-helper">{props.helper}</div>
+        )}
         {/* TODO uniqueness checking */}
         {formik.touched[props.name] && formik.errors[props.name] && (
           <div className="form-helper error">

@@ -32,7 +32,7 @@ export function SelectField(props: SelectFieldProps) {
             meta.touched && meta.error && "bp3-intent-danger"
           )}
           disabled={formik.isSubmitting}
-          {...field as Omit<FieldInputProps<any>, "multiple">}
+          {...(field as Omit<FieldInputProps<any>, "multiple">)}
         >
           {props.values === "loading" ? (
             <option disabled>Loading...</option>
@@ -44,16 +44,12 @@ export function SelectField(props: SelectFieldProps) {
             ))
           )}
         </HTMLSelect>
-        <div className="form-helper">
-          What type is your show? If unsure, leave it as Regular.
-        </div>
+        {typeof props.helper === "string" && (
+          <div className="form-helper">{props.helper}</div>
+        )}
         {/* TODO uniqueness checking */}
         {meta.touched && meta.error && (
-          <div
-            className="form-helper error"
-          >
-            {meta.error}
-          </div>
+          <div className="form-helper error">{meta.error}</div>
         )}
       </div>
     </>

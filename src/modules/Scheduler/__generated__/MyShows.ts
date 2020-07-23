@@ -26,6 +26,7 @@ export interface MyShows_me_shows {
 
 export interface MyShows_me {
   __typename: "User";
+  itemId: number;
   shows: MyShows_me_shows[] | null;
 }
 
