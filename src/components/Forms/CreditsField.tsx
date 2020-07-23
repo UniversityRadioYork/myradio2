@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  useFormikContext,
-  FieldInputProps,
-} from "formik";
+import { useFormikContext, FieldInputProps } from "formik";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Button, Intent, HTMLSelect } from "@blueprintjs/core";
@@ -13,7 +10,7 @@ import { MemberFieldlet } from "./MemberFieldlet";
 const QUERY_CREDIT_TYPES = gql`
   query CreditsField_CreditTypes {
     allCreditTypes {
-      id: text
+      itemId: value
       text
       value
     }
@@ -80,7 +77,7 @@ export function CreditsField(props: CreditsFieldProps) {
                   <option disabled>Loading...</option>
                 ) : (
                   data?.allCreditTypes?.map((ct) => (
-                    <option key={ct.value} value={ct.value}>
+                    <option key={props.name + ct.value} value={ct.value}>
                       {ct.text}
                     </option>
                   ))
@@ -106,9 +103,7 @@ export function CreditsField(props: CreditsFieldProps) {
         <div className="form-helper">Who's on your show?</div>
         {/* TODO uniqueness checking */}
         {formik.touched[props.name] && formik.errors[props.name] && (
-          <div
-            className="form-helper error"
-          >
+          <div className="form-helper error">
             {Array.isArray((formik.errors[props.name] as any).memberid)
               ? (formik.errors[props.name] as any).memberid.filter(
                   (x: any) => !!x
@@ -119,11 +114,9 @@ export function CreditsField(props: CreditsFieldProps) {
           </div>
         )}
         {error && (
-            <div
-            className="form-helper error"
-          >
-              Failed to load credit types! <code>{error.toString()}</code>
-            </div>
+          <div className="form-helper error">
+            Failed to load credit types! <code>{error.toString()}</code>
+          </div>
         )}
       </div>
     </>

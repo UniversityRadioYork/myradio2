@@ -7,31 +7,37 @@ import { useLazyQuery, useApolloClient } from "@apollo/react-hooks";
 import {
   MemberField_GetUserInfo,
   MemberField_GetUserInfoVariables,
-  MemberField_GetUserInfo_user,
 } from "./__generated__/MemberField_GetUserInfo";
 import {
   MemberField_SearchMembers,
   MemberField_SearchMembersVariables,
 } from "./__generated__/MemberField_SearchMembers";
 import { MenuItem, Intent, Spinner } from "@blueprintjs/core";
+import { MemberFieldlet_MemberInfo } from "./__generated__/MemberFieldlet_MemberInfo";
+
+const FRAGMENT_MEMBER_INFO = gql`
+  fragment MemberFieldlet_MemberInfo on User {
+    __typename
+    itemId
+    fname
+    sname
+    localAlias
+    eduroam
+  }
+`;
 
 const QUERY_GET_USER_INFO = gql`
   query MemberField_GetUserInfo($memberid: Int!) {
     user(itemid: $memberid) {
-      id
-      itemId
-      fname
-      sname
-      localAlias
-      eduroam
+      ...MemberFieldlet_MemberInfo
     }
   }
+  ${FRAGMENT_MEMBER_INFO}
 `;
 
 const QUERY_SEARCH_MEMBERS = gql`
   query MemberField_SearchMembers($query: String!, $limit: Int) {
     findMemberByName(name: $query, limit: $limit) {
-      id: memberid
       itemId: memberid
       fname
       sname
@@ -41,12 +47,7 @@ const QUERY_SEARCH_MEMBERS = gql`
   }
 `;
 
-type FieldletUserInfo = Omit<
-  MemberField_GetUserInfo_user,
-  "__typename" | "id"
-> & {
-  id: string | number;
-};
+type FieldletUserInfo = Omit<MemberFieldlet_MemberInfo, "__typename" | "id">;
 
 const MemberSuggest = Suggest.ofType<FieldletUserInfo>();
 
@@ -60,9 +61,12 @@ export function MemberFieldlet(props: MemberFieldletProps) {
   const apollo = useApolloClient();
   const [
     getMemberData,
-    { data: memberData, loading: memberDataLoading }, // TODO error handling
+    { data: memberData }, // TODO error handling
   ] = useLazyQuery<MemberField_GetUserInfo, MemberField_GetUserInfoVariables>(
-    QUERY_GET_USER_INFO
+    QUERY_GET_USER_INFO,
+    {
+      fetchPolicy: "cache-first",
+    }
   );
 
   useEffect(() => {
@@ -80,21 +84,28 @@ export function MemberFieldlet(props: MemberFieldletProps) {
   >(QUERY_SEARCH_MEMBERS, {
     onCompleted: (data) => {
       // Warm up the cache
-      data.findMemberByName.forEach((data) => {
-        apollo.query<MemberField_GetUserInfo, MemberField_GetUserInfoVariables>(
-          {
-            query: QUERY_GET_USER_INFO,
-            variables: {
-              memberid: data.itemId,
+      data.findMemberByName?.forEach((data) => {
+        apollo.cache.writeQuery<
+          MemberField_GetUserInfo,
+          MemberField_GetUserInfoVariables
+        >({
+          query: QUERY_GET_USER_INFO,
+          variables: {
+            memberid: data.itemId,
+          },
+          data: {
+            user: {
+              ...data,
+              __typename: "User",
             },
-          }
-        );
+          },
+        });
       });
     },
   });
 
   const debouncedSearch = debounce(
-    (q) => search({ variables: { query: q } }),
+    (q) => search({ variables: { query: q, limit: 8 } }),
     150
   );
 
@@ -105,7 +116,7 @@ export function MemberFieldlet(props: MemberFieldletProps) {
         items={searchResults?.findMemberByName || []}
         onItemSelect={(val) => helpers.setValue(val.itemId)}
         inputValueRenderer={(item) =>
-          !memberDataLoading && typeof item === "object"
+          typeof item === "object"
             ? `${item.fname} ${item.sname} (${item.localAlias || item.eduroam})`
             : "Loading..."
         }

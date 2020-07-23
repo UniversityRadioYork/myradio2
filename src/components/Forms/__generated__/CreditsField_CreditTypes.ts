@@ -9,7 +9,7 @@
 
 export interface CreditsField_CreditTypes_allCreditTypes {
   __typename: "CreditType";
-  id: string;
+  itemId: number;
   text: string;
   value: number;
 }

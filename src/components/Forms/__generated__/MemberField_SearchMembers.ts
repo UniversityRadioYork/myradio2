@@ -9,7 +9,6 @@
 
 export interface MemberField_SearchMembers_findMemberByName {
   __typename: "MemberSearchResult";
-  id: number;
   itemId: number;
   fname: string;
   sname: string;
@@ -18,7 +17,7 @@ export interface MemberField_SearchMembers_findMemberByName {
 }
 
 export interface MemberField_SearchMembers {
-  findMemberByName: MemberField_SearchMembers_findMemberByName[];
+  findMemberByName: MemberField_SearchMembers_findMemberByName[] | null;
 }
 
 export interface MemberField_SearchMembersVariables {

@@ -9,7 +9,6 @@
 
 export interface MemberField_GetUserInfo_user {
   __typename: "User";
-  id: string;
   itemId: number;
   fname: string;
   sname: string;

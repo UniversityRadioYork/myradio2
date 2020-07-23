@@ -38,7 +38,9 @@ function createApolloClient(env: "dev" | "staging" | "prod", url: string) {
     ]),
     cache: new InMemoryCache({
       fragmentMatcher,
-      dataIdFromObject: (val) => val.id, // all our object IDs are global-scoped anyway
+      dataIdFromObject: (val) =>
+        val.id ||
+        val.__typename + ":" + ((val as any).itemId || (val as any).value), // all our object IDs are global-scoped anyway
     }),
   });
 }
