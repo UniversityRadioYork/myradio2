@@ -82,6 +82,7 @@ function SingleShowView({ show }: { show: SingleShow }) {
 const MY_SHOWS_QUERY = gql`
   query MyShows($thisTerm: Boolean) {
     me {
+      itemId
       shows(current_term_only: $thisTerm) {
         id
         ...SingleShow
@@ -159,7 +160,12 @@ export default function ListShows() {
           <Dialog
             isOpen={match !== null}
             onClose={() => history.push("/scheduler/shows")}
-            style={{ background: "white", padding: "2em", width: "auto", maxWidth: 980 }}
+            style={{
+              background: "white",
+              padding: "2em",
+              width: "auto",
+              maxWidth: 980,
+            }}
           >
             <CreateShowForm />
           </Dialog>
