@@ -11,6 +11,7 @@ import {
   SelectField,
   TagField,
   SubmitButton,
+  CheckboxField,
 } from "../../components/Forms";
 import { CreditsField } from "../../components/Forms/CreditsField";
 
@@ -165,6 +166,13 @@ export default function CreateShowForm() {
           id="show-tags"
           label="Tags"
           helper="Give your show a set of tags that describe it."
+        />
+
+        <CheckboxField
+          name="mixclouder"
+          id="show-enable-mixcloud"
+          label="Enable Mixcloud"
+          helper="If checked, each episode of your show will be automatically uploaded to Mixcloud."
         />
 
         <SubmitButton />

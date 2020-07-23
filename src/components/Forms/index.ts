@@ -3,3 +3,4 @@ export { TextField } from "./TextField";
 export { SelectField } from "./SelectField";
 export { TagField } from "./TagField";
 export { SubmitButton } from "./SubmitButton";
+export { CheckboxField } from "./CheckboxField";
