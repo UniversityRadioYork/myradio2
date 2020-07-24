@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormikContext, FieldInputProps } from "formik";
-import gql from "graphql-tag";
+import { gql } from "graphql.macro";
 import { useQuery } from "@apollo/react-hooks";
 import { Button, Intent, HTMLSelect } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";

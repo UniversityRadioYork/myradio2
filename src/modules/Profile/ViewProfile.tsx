@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import gql from "graphql-tag";
+import { gql } from "graphql.macro";
 import { UserInfo } from "./__generated__/UserInfo";
 import { Dialog, Button, Intent, Classes } from "@blueprintjs/core";
 import UserTimeline, { USER_TIMELINE_FRAGMENT } from "./UserTimeline";

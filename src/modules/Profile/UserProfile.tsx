@@ -1,5 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "graphql.macro";
 import { useQuery } from "@apollo/react-hooks";
 import { Spinner, Intent } from "@blueprintjs/core";
 import ViewProfile, { USER_INFO_FRAGMENT } from "./ViewProfile";

@@ -1,5 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
+import { gql } from "graphql.macro";
 import * as Yup from "yup";
 import { CreateShowInput } from "../../__generated__/globalTypes";
 import { Intent, Callout } from "@blueprintjs/core";

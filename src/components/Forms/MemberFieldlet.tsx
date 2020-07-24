@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import gql from "graphql-tag";
+import { gql } from "graphql.macro";
 import { Suggest } from "@blueprintjs/select";
 import { useField, useFormikContext } from "formik";
 import { debounce } from "lodash";
