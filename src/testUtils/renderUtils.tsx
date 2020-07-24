@@ -1,4 +1,4 @@
-import rootReducer from "../rootReducer";
+import rootReducer, { AppState } from "../rootReducer";
 import { Action, Middleware } from "redux";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
@@ -9,7 +9,10 @@ import { Router } from "react-router-dom";
 
 export function renderInAppContext(
   component: React.ReactNode,
-  { initialState = rootReducer(undefined, { type: "$INIT" }) } = {}
+  options: {
+    initialState?: AppState;
+    historyOptions?: history.MemoryHistoryBuildOptions;
+  } = {}
 ) {
   const actions: Action[] = [];
   const observerMiddleware: Middleware = () => (next) => (action) => {
@@ -17,13 +20,18 @@ export function renderInAppContext(
     return next(action);
   };
 
+  const initialState =
+    typeof options.initialState === undefined
+      ? rootReducer(undefined, { type: "$INIT" })
+      : options.initialState;
+
   const store = configureStore({
     reducer: rootReducer,
     preloadedState: initialState,
     middleware: [observerMiddleware, ...getDefaultMiddleware()],
   });
 
-  const hist = history.createMemoryHistory();
+  const hist = history.createMemoryHistory(options.historyOptions);
 
   const utils = {
     dispatch(action: Action) {
@@ -44,6 +52,6 @@ export function renderInAppContext(
       </Provider>
     ),
     ...utils,
-    history: hist
+    history: hist,
   };
 }

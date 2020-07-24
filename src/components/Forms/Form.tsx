@@ -1,6 +1,6 @@
 import React from "react";
 import Yup from "yup";
-import { FormikHelpers, Formik, Form as FormikForm } from "formik";
+import { FormikHelpers, Formik, Form as FormikForm, FormikProps } from "formik";
 
 import "./formStyles.scss";
 import { Prompt } from "react-router-dom";
@@ -10,6 +10,7 @@ export interface FormProps<T extends {}> {
   onSubmit: (values: T, helpers: FormikHelpers<T>) => any;
   validationSchema: Yup.ObjectSchema<any>;
   children: React.ReactNode;
+  innerRef?: React.Ref<FormikProps<T>>;
 }
 
 const DEBUG = true && process.env.NODE_ENV === "development";
@@ -20,6 +21,7 @@ export function Form<T>(props: FormProps<T>) {
       initialValues={props.initialValues}
       onSubmit={props.onSubmit}
       validationSchema={props.validationSchema}
+      innerRef={props.innerRef}
     >
       {(formik) => (
         <>
@@ -29,20 +31,18 @@ export function Form<T>(props: FormProps<T>) {
             )}
             message="You have unsaved changes. Are you sure you want to close this page?"
           />
-          <FormikForm className="form">{props.children}</FormikForm>
+          <FormikForm className="form" data-testid="FORM">
+            {props.children}
+          </FormikForm>
           {DEBUG && (
-              <>
+            <>
               <p>
-                  <code>
-                      {JSON.stringify(formik.values)}
-                  </code>
+                <code>{JSON.stringify(formik.values)}</code>
               </p>
               <p>
-                  <code>
-                      {JSON.stringify(formik.errors)}
-                  </code>
+                <code>{JSON.stringify(formik.errors)}</code>
               </p>
-              </>
+            </>
           )}
         </>
       )}
