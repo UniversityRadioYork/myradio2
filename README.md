@@ -2,6 +2,12 @@
 
 The on-going rewrite of the front-end of our radio management system, MyRadio.
 
+## Status
+
+MyRadio2 has not seen any serious work in almost a year, owing to its immense scope and the fact that only one person was working on it. It can be considered, for all intents and purposes, abandoned.
+
+If future Computing Team members want to un-archive the repo and try and get it somewhere, feel free to! But no serious work will be done it by the current team in the immediate future.
+
 ## Available Scripts
 
 In the project directory, you can run:
